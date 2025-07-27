@@ -1,0 +1,350 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+    overflow: hidden;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 70px; /* match .header height */
+    bottom: 50px; /* match .footer height */
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #005599;
+    color: white;
+    width: 280px;
+    padding: 1rem;
+    flex-shrink: 0;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu > li {
+    margin-bottom: 1rem;
+}
+
+.menu-title {
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    padding: 0.3rem 0;
+    color: white;
+}
+
+.menu-title:hover {
+    text-decoration: underline;
+}
+
+.submenu {
+    list-style: none;
+    margin-left: 1rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.submenu.show {
+    max-height: 200px;
+}
+
+.submenu li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-top: 0.3rem;
+    white-space: nowrap;
+}
+
+.submenu li a:hover {
+    text-decoration: underline;
+}
+
+/* Container Layout */
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Content */
+.content {
+    flex: 1;
+    padding: 2rem;
+    background-color: white;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    display: flex;
+    gap: 2rem;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+    max-width: 800px;
+    width: 100%;
+}
+
+.box_with_menu {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #003366;
+    color: white;
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Buttons */
+.btn,
+.icon-btn,
+.submit-btn,
+.register-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+/* Primary Button */
+.btn,
+.submit-btn {
+    background-color: #003366;
+    color: white;
+}
+
+.btn:hover,
+.submit-btn:hover {
+    background-color: #005599;
+}
+
+/* Secondary Button (e.g. Register) */
+.register-btn {
+    background-color: #e0e0e0;
+    color: #003366;
+}
+
+.register-btn:hover {
+    background-color: #cccccc;
+}
+
+/* Icon Button */
+.icon-btn {
+    background-color: white;
+    color: #003366;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+
+.icon-btn:hover {
+    background-color: #ddd;
+}
+
+.icon-btn i {
+    font-size: 1.2rem;
+}
+
+.login-image img {
+    width: 250px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.submit-form {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* Form Components */
+form label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #003366;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Select Dropdown */
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-size: 1rem;
+    color: #003366;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #005599;
+    box-shadow: 0 0 5px rgba(0, 85, 153, 0.5);
+}
+
+/* Option styling */
+/* Note: styling <option> is limited across browsers */
+option {
+    padding: 0.3rem 0.5rem;
+    color: #003366;
+    background-color: white;
+}
+
+/* Lists (ul, ol) */
+ul, ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: #003366;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+li {
+    margin-bottom: 0.4rem;
+}
+
+/* Scrollbar Styling for Webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f4f4f4;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #005599;
+    border-radius: 4px;
+}
+
+/* Optional: Table Basic Styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    color: #003366;
+}
+
+table th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .main {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-buttons {
+        margin-top: 1rem;
+    }
+
+    .box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .login-image img {
+        width: 180px;
+    }
+
+    .submit-form {
+        width: 100%;
+    }
+}
