@@ -30,11 +30,17 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM vehicle ORDER BY vehicle_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<VehicleDTO>();
             while (rs.next()) {
                 VehicleDTO obj = new VehicleDTO();
+                obj.setVehicleNumber(rs.getString("vehicle_number"));
+                obj.setConsumptionRate(rs.getBigDecimal("consumption_rate"));
+                obj.setMaxPassenger(rs.getInt("max_passenger"));
+                obj.setFuelType(rs.getString("fuel_type"));
+                obj.setRouteId(rs.getInt("route_id"));
+                obj.setCapacity(rs.getInt("capacity"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -65,17 +71,22 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
      * @param obj added object
      * @return true for success, false for fail
      */
+    @Override
     public boolean add(VehicleDTO obj) {
         Connection con =null;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO vehicle (vehicle_number,consumption_rate,max_passenger,fuel_type,route_id,capacity) VALUES(?, ?, ?,?,?,?)");
             
-            
-            
-            
+            pstmt.setString(1,obj.getVehicleNumber());
+            pstmt.setBigDecimal(2, obj.getConsumptionRate());
+            pstmt.setInt(3, obj.getMaxPassenger());
+            pstmt.setString(4, obj.getFuelType());
+            pstmt.setInt(5, obj.getRouteId());
+            pstmt.setInt(6, obj.getCapacity());
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -103,6 +114,7 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
      * @param objId object id
      * @return object
      */
+    @Override
     public VehicleDTO getById(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -112,14 +124,18 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM vehicle WHERE vehicle_number = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new VehicleDTO();
-                
-                
-                
+                obj.setVehicleNumber(rs.getString("vehicle_number"));
+                obj.setConsumptionRate(rs.getBigDecimal("consumption_rate"));
+                obj.setMaxPassenger(rs.getInt("max_passenger"));
+                obj.setFuelType(rs.getString("fuel_type"));
+                obj.setRouteId(rs.getInt("route_id"));
+                obj.setCapacity(rs.getInt("capacity"));
+    
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,22 +161,25 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
     
     /**
      * update object
-     * @param object updated object
+     * @param obj updated object
      * @return true for success, false for fail
      */
-    public boolean update(VehicleDTO object) {
+    @Override
+    public boolean update(VehicleDTO obj) {
         Connection con;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
-            
-            
-            
-            
+                    "UPDATE vehivle SET vehicle_number = ?, consumption_rate = ?, max_passager = ?, fuel_type = ?, "
+                    + "route_id = ?, capacity = ?  WHERE vehicle_number = ?");
+            pstmt.setString(1, obj.getVehicleNumber());
+            pstmt.setBigDecimal(2, obj.getConsumptionRate());
+            pstmt.setInt(3, obj.getMaxPassenger());
+            pstmt.setString(4, obj.getFuelType());
+            pstmt.setInt(5, obj.getRouteId());
+            pstmt.setInt(6, obj.getCapacity()); 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -189,6 +208,7 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
      * @param objId object id
      * @return true for success, false for fail
      */
+    @Override
     public boolean delete(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -196,7 +216,7 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM vehicle WHERE vehicle_number = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {

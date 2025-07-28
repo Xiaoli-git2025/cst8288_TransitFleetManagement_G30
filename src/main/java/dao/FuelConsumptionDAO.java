@@ -30,11 +30,16 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM fuelconsumption ORDER BY fc_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<FuelConsumptionDTO>();
             while (rs.next()) {
                 FuelConsumptionDTO obj = new FuelConsumptionDTO();
+                obj.setVehicleId(rs.getInt("vehicle_id"));
+                obj.setDate(rs.getDate("date"));
+                obj.setMilesTraveled(rs.getBigDecimal("mile_traveled"));
+                obj.setUnitPrice(rs.getBigDecimal("unit_price"));
+                
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -65,17 +70,20 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
      * @param obj added object
      * @return true for success, false for fail
      */
+    @Override
     public boolean add(FuelConsumptionDTO obj) {
         Connection con =null;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO fuelconsumption (vehicle_id,date,miles_traveled,unit_price) VALUES(?, ?, ?,?)");
             
-            
-            
-            
+            pstmt.setInt(1, obj.getVehicleId());
+            pstmt.setDate(2, obj.getDate());
+            pstmt.setBigDecimal(3, obj.getMilesTraveled());
+            pstmt.setBigDecimal(4, obj.getUnitPrice());
+             
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -103,6 +111,7 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
      * @param objId object id
      * @return object
      */
+    @Override
     public FuelConsumptionDTO getById(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -112,10 +121,15 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM  fuelconsumption WHERE fc_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
+                obj.setVehicleId(rs.getInt("vehicle_id"));
+                obj.setDate(rs.getDate("date"));
+                obj.setMilesTraveled(rs.getBigDecimal("miles_traveled"));
+                obj.setUnitPrice(rs.getBigDecimal("unit_price"));
+                
                 obj = new FuelConsumptionDTO();
                 
                 
@@ -145,21 +159,24 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
     
     /**
      * update object
-     * @param object updated object
+     * @param obj updated object
      * @return true for success, false for fail
      */
-    public boolean update(FuelConsumptionDTO object) {
+    @Override
+    public boolean update(FuelConsumptionDTO obj) {
         Connection con;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
+                    "UPDATE fuelconsumption SET vehicle_id = ?, date = ?, miles_traveled = ?, unit_price = ?,"
+                    + " WHERE user_id = ?");
             
-            
-            
+            pstmt.setInt(1, obj.getVehicleId());
+            pstmt.setDate(2, obj.getDate());
+            pstmt.setBigDecimal(3, obj.getMilesTraveled());
+            pstmt.setBigDecimal(4, obj.getUnitPrice());
             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
@@ -189,6 +206,7 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
      * @param objId object id
      * @return true for success, false for fail
      */
+    @Override
     public boolean delete(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -196,7 +214,7 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM fuelconsumption WHERE fc_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {

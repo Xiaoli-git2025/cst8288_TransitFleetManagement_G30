@@ -74,10 +74,10 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO route (route_number,description) VALUES(?, ?)");
             
-            
-            
+            pstmt.setInt(1, obj.getRouteNumber());
+            pstmt.setString(2, obj.getDescription());   
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,9 +120,9 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new RouteDTO();
-                
-                
-                
+                obj.setRouteNumber(rs.getInt("route_number"));
+                obj.setDescription(rs.getString("description"));   
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,10 +148,10 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
     
     /**
      * update object
-     * @param object updated object
+     * @param obj updated object
      * @return true for success, false for fail
      */
-    public boolean update(RouteDTO object) {
+    public boolean update(RouteDTO obj) {
         Connection con;
         PreparedStatement pstmt = null;
         boolean ret = true;
@@ -160,10 +160,9 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
             pstmt = con.prepareStatement(
                     "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
                     + "route_id = ? WHERE user_id = ?");
-            
-            
-            
-            
+            pstmt.setInt(1, obj.getRouteNumber());
+            pstmt.setString(2, obj.getDescription()); 
+
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;

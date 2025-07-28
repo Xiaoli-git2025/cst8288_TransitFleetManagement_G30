@@ -30,11 +30,15 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM vehiclecomponent ORDER BY component_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<VehicleComponentDTO>();
             while (rs.next()) {
                 VehicleComponentDTO obj = new VehicleComponentDTO();
+                obj.setVehicleId(rs.getInt("vehicleId"));
+                obj.setComponentName(rs.getString("component_name"));
+                obj.setUsedHour(rs.getInt("used_hour"));
+                obj.setThresholdHour(rs.getInt("threhold_hour"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -65,17 +69,19 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
      * @param obj added object
      * @return true for success, false for fail
      */
+    @Override
     public boolean add(VehicleComponentDTO obj) {
         Connection con =null;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
-            
-            
-            
-            
+            pstmt = con.prepareStatement("INSERT INTO vehiclecomponent (component_name,vehicle_id, used_hour,threshold_hour) VALUES(?, ?, ?,?)");
+            pstmt.setString(1, obj.getComponentName());
+            pstmt.setInt(2, obj.getVehicleId());
+            pstmt.setInt(3, obj.getUsedHour());
+            pstmt.setInt(4, obj.getThresholdHour());
+            pstmt.executeUpdate(); 
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -103,6 +109,7 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
      * @param objId object id
      * @return object
      */
+    @Override
     public VehicleComponentDTO getById(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -112,12 +119,16 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM vehiclecomponent WHERE component_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new VehicleComponentDTO();
-                
+                obj.setComponentId(rs.getInt("component_id"));
+                obj.setVehicleId(rs.getInt("vehicle_id"));
+                obj.setComponentName(rs.getString("component_name"));
+                obj.setUsedHour(rs.getInt("used_hour"));
+                obj.setThresholdHour(rs.getInt("threshold_hour"));
                 
                 
             }
@@ -145,22 +156,24 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
     
     /**
      * update object
-     * @param object updated object
+     * @param obj updated object
      * @return true for success, false for fail
      */
-    public boolean update(VehicleComponentDTO object) {
+    @Override
+    public boolean update(VehicleComponentDTO obj) {
         Connection con;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
-            
-            
-            
-            
+                    "UPDATE vehiclecomponent SET component_name = ?, vehicle_id = ?, used_hour = ?, threhold_hosur = ?,"
+                    + "WHERE component_id = ?");
+            pstmt.setString(1, obj.getComponentName());
+            pstmt.setInt(2, obj.getVehicleId());
+            pstmt.setInt(3, obj.getUsedHour());
+            pstmt.setInt(4, obj.getThresholdHour());
+            pstmt.setInt(5, obj.getComponentId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -189,6 +202,7 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
      * @param objId object id
      * @return true for success, false for fail
      */
+    @Override
     public boolean delete(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -196,7 +210,7 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM vehiclecomponent WHERE component_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
