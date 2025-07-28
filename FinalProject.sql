@@ -155,9 +155,10 @@ CREATE TABLE MaintenanceSchedule (
     schedule_date DATE,
     note TEXT,
     maintenance_cost DECIMAL(10,2),
+    completed BOOLEAN,
     FOREIGN KEY (maintenance_id) REFERENCES MaintenanceAlert(maintenance_id)
 );
-INSERT INTO MaintenanceSchedule(maintenance_id, schedule_date, note, maintenance_cost) VALUES
-(1, '2025-07-03', 'need tool', 727.62),
-(2, '2025-07-29', 'need oil change', 91.34),
-(3, '2025-08-01', 'wait for parts', 264.60);
+INSERT INTO MaintenanceSchedule(maintenance_id, schedule_date, note, maintenance_cost, completed) VALUES
+(1, '2025-07-03', 'need tool', 727.62, 0),
+(2, '2025-07-29', 'need oil change', 91.34, 0),
+(3, '2025-08-01', 'wait for parts', 264.60, 0);

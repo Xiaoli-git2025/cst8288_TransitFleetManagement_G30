@@ -30,11 +30,17 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM maintenancealert ORDER BY alert_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<MaintenanceAlertDTO>();
             while (rs.next()) {
                 MaintenanceAlertDTO obj = new MaintenanceAlertDTO();
+                obj.setMaintenanceId(rs.getInt("maintenance_id"));
+                obj.setAlertId(rs.getInt("alert_id"));
+                obj.setComponentId(rs.getInt("component_id"));
+                obj.setAlertDate(rs.getDate("alert_date"));
+                obj.setReporterId(rs.getInt("reporter_id"));
+                obj.setResolved(rs.getBoolean("resolved"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -71,11 +77,12 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO>{
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
-            
-            
-            
-            
+            pstmt = con.prepareStatement("INSERT INTO maintenancealert (alert_id, component_id, alert_date, reporter_id, resolved) VALUES(?, ?, ?, ?,?)");
+            pstmt.setInt(1, obj.getAlertId());
+            pstmt.setInt(2, obj.getComponentId());
+            pstmt.setDate(3, obj.getAlertDate());
+            pstmt.setInt(4, obj.getReporterId());
+            pstmt.setBoolean(5, obj.isResolved());
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -112,14 +119,17 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM users WHERE maintenance_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new MaintenanceAlertDTO();
-                
-                
-                
+                obj.setMaintenanceId(rs.getInt("maintenance_id"));
+                obj.setAlertId(rs.getInt("alert_id"));
+                obj.setComponentId(rs.getInt("component_id"));
+                obj.setAlertDate(rs.getDate("alert_date"));
+                obj.setReporterId(rs.getInt("reporter_id"));
+                obj.setResolved(rs.getBoolean("resolved"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,12 +165,14 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
-            
-            
-            
-            
+                    "UPDATE maintenancealert SET alert_id = ?, component_id = ?, alert_date = ?, reporter_id = ?, "
+                    + "resolved = ? WHERE maintenance_id = ?");
+            pstmt.setInt(1, object.getAlertId());
+            pstmt.setInt(2, object.getComponentId());
+            pstmt.setDate(3, object.getAlertDate());
+            pstmt.setInt(4, object.getReporterId());
+            pstmt.setBoolean(5, object.isResolved());
+            pstmt.setInt(6, object.getMaintenanceId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -196,7 +208,7 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM maintenancealert WHERE maintenance_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {

@@ -20,6 +20,16 @@ public class MaintenanceScheduleDTO {
 
     // The cost associated with this maintenance event
     private java.math.BigDecimal maintenanceCost;
+    
+    private boolean completed;
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean isCompleted) {
+        this.completed = isCompleted;
+    }
 
     // Constructors
     public MaintenanceScheduleDTO() {}
@@ -73,4 +83,6 @@ public class MaintenanceScheduleDTO {
     public void setMaintenanceCost(java.math.BigDecimal maintenanceCost) {
         this.maintenanceCost = maintenanceCost;
     }
+    
+    
 }
