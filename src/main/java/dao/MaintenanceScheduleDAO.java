@@ -4,6 +4,7 @@
  * Description: user dao
  */
 package dao;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
@@ -30,11 +31,17 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM maintenanceschedule ORDER BY schedule_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<MaintenanceScheduleDTO>();
             while (rs.next()) {
                 MaintenanceScheduleDTO obj = new MaintenanceScheduleDTO();
+                obj.setScheduleId(rs.getInt("schedule_id"));
+                obj.setMaintenanceId(rs.getInt("maintenance_id"));
+                obj.setScheduleDate(rs.getDate("schedule_date"));
+                obj.setNote(rs.getString("note"));
+                obj.setMaintenanceCost(rs.getBigDecimal("maintenance_cost"));
+                obj.setCompleted(rs.getBoolean("completed"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -71,11 +78,12 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
-            
-            
-            
-            
+            pstmt = con.prepareStatement("INSERT INTO maintenanceschedule (maintenance_id, schedule_date, note, maintenance_cost, completed) VALUES(?, ?, ?,?,?)");
+            pstmt.setInt(1, obj.getMaintenanceId());
+            pstmt.setDate(2, obj.getScheduleDate());
+            pstmt.setString(3, obj.getNote());
+            pstmt.setBigDecimal(4, obj.getMaintenanceCost());
+            pstmt.setBoolean(5, obj.isCompleted());
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -112,14 +120,17 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM maintenanceschedule WHERE schedule_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new MaintenanceScheduleDTO();
-                
-                
-                
+                obj.setScheduleId(rs.getInt("schedule_id"));
+                obj.setMaintenanceId(rs.getInt("maintenance_id"));
+                obj.setScheduleDate(rs.getDate("schedule_date"));
+                obj.setNote(rs.getString("note"));
+                obj.setMaintenanceCost(rs.getBigDecimal("maintenance_cost"));
+                obj.setCompleted(rs.getBoolean("completed"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,12 +166,14 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
-            
-            
-            
-            
+                    "UPDATE maintenanceschedule SET maintenance_id = ?, schedule_date = ?, note = ?, maintenance_cost = ?, "
+                    + "completed = ? WHERE schedule_id = ?");
+            pstmt.setInt(1, object.getMaintenanceId());
+            pstmt.setDate(2, object.getScheduleDate());
+            pstmt.setString(3, object.getNote());
+            pstmt.setBigDecimal(4, object.getMaintenanceCost());
+            pstmt.setBoolean(5, object.isCompleted());
+            pstmt.setInt(6, object.getScheduleId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -196,7 +209,7 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM maintenanceschedule WHERE schedule_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {

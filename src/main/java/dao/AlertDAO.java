@@ -30,11 +30,14 @@ public class AlertDAO implements DAOInterface<AlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT alert_id, alert_type, alert_description FROM alert ORDER BY alert_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<AlertDTO>();
             while (rs.next()) {
                 AlertDTO obj = new AlertDTO();
+                obj.setAlertId(rs.getInt("alert_id"));
+                obj.setAlertType(rs.getString("alert_type"));
+                obj.setAlertDescription(rs.getString("alert_description"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -71,11 +74,10 @@ public class AlertDAO implements DAOInterface<AlertDTO>{
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
-            
-            
-            
-            
+            pstmt = con.prepareStatement("INSERT INTO alert (alert_type, alert_description) VALUES(?, ?)");
+            pstmt.setString(1, obj.getAlertType());
+            pstmt.setString(2, obj.getAlertDescription());
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -112,14 +114,14 @@ public class AlertDAO implements DAOInterface<AlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM alert WHERE alert_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new AlertDTO();
-                
-                
-                
+                obj.setAlertId(rs.getInt("alert_id"));
+                obj.setAlertType(rs.getString("alert_type"));
+                obj.setAlertDescription(rs.getString("alert_description"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,12 +157,10 @@ public class AlertDAO implements DAOInterface<AlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
-            
-            
-            
-            
+                    "UPDATE alert SET alert_type = ?, alert_description = ? WHERE alert_id = ?");
+            pstmt.setString(1, object.getAlertType());
+            pstmt.setString(2, object.getAlertDescription());
+            pstmt.setInt(3, object.getAlertId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -196,7 +196,7 @@ public class AlertDAO implements DAOInterface<AlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM alert WHERE alert_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
