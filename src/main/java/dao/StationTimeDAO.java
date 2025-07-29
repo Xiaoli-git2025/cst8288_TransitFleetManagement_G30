@@ -35,6 +35,7 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
             objs = new ArrayList<StationTimeDTO>();
             while (rs.next()) {
                 StationTimeDTO obj = new StationTimeDTO();
+                obj.setTimeId(rs.getInt("time_id"));
                 obj.setLogDate(rs.getDate("log_date"));
                 obj.setArriveTime(rs.getTime("arrive_time"));
                 obj.setDepartTime(rs.getTime("depart_time"));
@@ -77,7 +78,7 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO stationtime (log_date,arrive_time,depart_time,note,schedule_id,user_id) VALUES(?, ?, ?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO stationtime (log_date,arrive_time,depart_time,note,schedule_id,user_id) VALUES(?, ?, ?,?,?,?)");
         
             pstmt.setDate(1,obj.getLogDate());
             pstmt.setTime(2,obj.getArriveTime());
@@ -173,7 +174,7 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE stationtime SET log_date = ?, arrive_time = ?, depart_time = ?, scheduel_id = ?, "
+                    "UPDATE stationtime SET log_date = ?, arrive_time = ?, depart_time = ?, note = ?, schedule_id = ?, "
                     + "user_id = ? WHERE time_id = ?");
             pstmt.setDate(1, obj.getLogDate());
             pstmt.setTime(2, obj.getArriveTime());

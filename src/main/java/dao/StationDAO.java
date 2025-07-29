@@ -30,7 +30,7 @@ public class StationDAO implements DAOInterface<StationDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users station BY station_id");
+                    "SELECT * FROM station order by station_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<StationDTO>();
             while (rs.next()) {
@@ -75,7 +75,6 @@ public class StationDAO implements DAOInterface<StationDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement("INSERT INTO station (station_name) VALUES(?)");
-            
             pstmt.setString(1, obj.getStationName());
             pstmt.executeUpdate();
        
@@ -160,10 +159,11 @@ public class StationDAO implements DAOInterface<StationDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET station_name = ? WHERE user_id = ?");
+                    "UPDATE station SET station_name = ? WHERE station_id = ?");
             
-            pstmt.setInt(1, obj.getStationId());
-            pstmt.setString(2, obj.getStationName());             
+            pstmt.setInt(2, obj.getStationId());
+            pstmt.setString(1, obj.getStationName());  
+            
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
