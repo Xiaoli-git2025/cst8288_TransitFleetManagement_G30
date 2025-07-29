@@ -30,11 +30,13 @@ public class StationDAO implements DAOInterface<StationDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM users station BY station_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<StationDTO>();
             while (rs.next()) {
                 StationDTO obj = new StationDTO();
+                obj.setStationId(rs.getInt("station_id"));
+                obj.setStationName(rs.getString("station_name"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -65,17 +67,18 @@ public class StationDAO implements DAOInterface<StationDTO>{
      * @param obj added object
      * @return true for success, false for fail
      */
+    @Override
     public boolean add(StationDTO obj) {
         Connection con =null;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO station (station_name) VALUES(?)");
             
-            
-            
-            
+            pstmt.setString(1, obj.getStationName());
+            pstmt.executeUpdate();
+       
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -103,6 +106,7 @@ public class StationDAO implements DAOInterface<StationDTO>{
      * @param objId object id
      * @return object
      */
+    @Override
     public StationDTO getById(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -112,14 +116,14 @@ public class StationDAO implements DAOInterface<StationDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM station WHERE station_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new StationDTO();
-                
-                
-                
+                obj.setStationId(rs.getInt("station_id"));
+                obj.setStationName(rs.getString("station_name"));
+     
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,19 +152,18 @@ public class StationDAO implements DAOInterface<StationDTO>{
      * @param object updated object
      * @return true for success, false for fail
      */
-    public boolean update(StationDTO object) {
+    @Override
+    public boolean update(StationDTO obj) {
         Connection con;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
+                    "UPDATE users SET station_name = ? WHERE user_id = ?");
             
-            
-            
-            
+            pstmt.setInt(1, obj.getStationId());
+            pstmt.setString(2, obj.getStationName());             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -189,6 +192,7 @@ public class StationDAO implements DAOInterface<StationDTO>{
      * @param objId object id
      * @return true for success, false for fail
      */
+    @Override
     public boolean delete(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -196,7 +200,7 @@ public class StationDAO implements DAOInterface<StationDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM station WHERE station_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {

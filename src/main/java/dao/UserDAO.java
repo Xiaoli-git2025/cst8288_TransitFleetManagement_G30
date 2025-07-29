@@ -30,7 +30,7 @@ public class UserDAO implements DAOInterface<UserDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM users ORDER BY user_id");
             rs = pstmt.executeQuery();
             users = new ArrayList<UserDTO>();
             while (rs.next()) {
@@ -78,6 +78,7 @@ public class UserDAO implements DAOInterface<UserDTO>{
      * @param user added user
      * @return true for success, false for fail
      */
+    @Override
     public boolean add(UserDTO user) {
         Connection con =null;
         PreparedStatement pstmt = null;
@@ -119,6 +120,7 @@ public class UserDAO implements DAOInterface<UserDTO>{
      * @param userID user id
      * @return user
      */
+    @Override
     public UserDTO getById(int userID) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -167,6 +169,7 @@ public class UserDAO implements DAOInterface<UserDTO>{
      * @param user updated user
      * @return true for success, false for fail
      */
+    @Override
     public boolean update(UserDTO user) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -210,6 +213,7 @@ public class UserDAO implements DAOInterface<UserDTO>{
      * @param userId user id
      * @return true for success, false for fail
      */
+    @Override
     public boolean delete(int userId) {
         Connection con;
         PreparedStatement pstmt = null;

@@ -30,11 +30,16 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT user_id, user_name, email, password, user_type, route_id FROM users ORDER BY user_id");
+                    "SELECT * FROM routeschedule ORDER BY schedule_id");
             rs = pstmt.executeQuery();
             objs = new ArrayList<RouteScheduleDTO>();
             while (rs.next()) {
                 RouteScheduleDTO obj = new RouteScheduleDTO();
+                obj.setRouteId(rs.getInt("route_id"));
+                obj.setStationId(rs.getInt("station_id"));
+                obj.setScheduleNumber(rs.getInt("schedule_number"));
+                obj.setScheduleArriveTime(rs.getTime("schedule_arrive_time"));
+                obj.setScheduleDepartTime(rs.getTime("schedule_depart_time"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -65,17 +70,21 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
      * @param obj added object
      * @return true for success, false for fail
      */
+    @Override
     public boolean add(RouteScheduleDTO obj) {
         Connection con =null;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO users (user_name, email, password, user_type, route_id) VALUES(?, ?, ?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO routeschedule (route_id,station_id,schedule_number,schedule_arrive_time,schedule_depart_time) VALUES(?, ?, ?,?,?)");
             
-            
-            
-            
+            pstmt.setInt(1, obj.getRouteId());
+            pstmt.setInt(2, obj.getStationId());
+            pstmt.setInt(3, obj.getScheduleNumber());
+            pstmt.setTime(4, obj.getScheduleArriveTime());
+            pstmt.setTime(5, obj.getScheduleDepartTime());
+
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -103,6 +112,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
      * @param objId object id
      * @return object
      */
+    @Override
     public RouteScheduleDTO getById(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -112,13 +122,17 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM routeschedule WHERE schedule_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new RouteScheduleDTO();
-                
-                
+                obj.setRouteId(rs.getInt("schedule_id"));
+                obj.setRouteId(rs.getInt("route_id"));
+                obj.setStationId(rs.getInt("station_id"));
+                obj.setScheduleNumber(rs.getInt("schedule_number"));
+                obj.setScheduleArriveTime(rs.getTime("schedule_arrive_time"));
+                obj.setScheduleDepartTime(rs.getTime("schedule_depart_time"));
                 
             }
         } catch (SQLException e) {
@@ -148,18 +162,22 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
      * @param object updated object
      * @return true for success, false for fail
      */
-    public boolean update(RouteScheduleDTO object) {
+    @Override
+    public boolean update(RouteScheduleDTO obj) {
         Connection con;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
+                    "UPDATE routeschedule SET route_id = ?, station_id = ?, schedule_number = ?, schedule_arrive_time = ?, "
+                    + "schedule_depart_time = ? WHERE schedule_id = ?");
             
-            
-            
+            pstmt.setInt(1, obj.getRouteId());
+            pstmt.setInt(2, obj.getStationId());
+            pstmt.setInt(3, obj.getScheduleNumber());
+            pstmt.setTime(4, obj.getScheduleArriveTime());
+            pstmt.setTime(5, obj.getScheduleDepartTime());
             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
@@ -189,6 +207,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
      * @param objId object id
      * @return true for success, false for fail
      */
+    @Override
     public boolean delete(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -196,7 +215,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM schedule WHERE schedule_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
