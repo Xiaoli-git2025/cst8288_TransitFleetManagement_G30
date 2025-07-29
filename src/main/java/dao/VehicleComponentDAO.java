@@ -35,10 +35,11 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
             objs = new ArrayList<VehicleComponentDTO>();
             while (rs.next()) {
                 VehicleComponentDTO obj = new VehicleComponentDTO();
-                obj.setVehicleId(rs.getInt("vehicleId"));
+                obj.setVehicleId(rs.getInt("vehicle_id"));
+                obj.setComponentId(rs.getInt("component_id"));
                 obj.setComponentName(rs.getString("component_name"));
                 obj.setUsedHour(rs.getInt("used_hour"));
-                obj.setThresholdHour(rs.getInt("threhold_hour"));
+                obj.setThresholdHour(rs.getInt("threshold_hour"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -167,8 +168,8 @@ public class VehicleComponentDAO implements DAOInterface<VehicleComponentDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE vehiclecomponent SET component_name = ?, vehicle_id = ?, used_hour = ?, threhold_hosur = ?,"
-                    + "WHERE component_id = ?");
+                "UPDATE vehiclecomponent SET component_name = ?, vehicle_id = ?, used_hour = ?, threshold_hour = ? "
+                + "WHERE component_id = ?");
             pstmt.setString(1, obj.getComponentName());
             pstmt.setInt(2, obj.getVehicleId());
             pstmt.setInt(3, obj.getUsedHour());
