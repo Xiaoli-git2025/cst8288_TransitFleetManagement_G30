@@ -37,7 +37,7 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
                 FuelConsumptionDTO obj = new FuelConsumptionDTO();
                 obj.setVehicleId(rs.getInt("vehicle_id"));
                 obj.setDate(rs.getDate("date"));
-                obj.setMilesTraveled(rs.getBigDecimal("mile_traveled"));
+                obj.setMilesTraveled(rs.getBigDecimal("miles_traveled"));
                 obj.setUnitPrice(rs.getBigDecimal("unit_price"));
                 
                 objs.add(obj);
@@ -170,13 +170,14 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE fuelconsumption SET vehicle_id = ?, date = ?, miles_traveled = ?, unit_price = ?,"
-                    + " WHERE user_id = ?");
+                    "UPDATE fuelconsumption SET vehicle_id = ?, date = ?, miles_traveled = ?, unit_price = ?"
+                    + " WHERE fc_id = ?");
             
             pstmt.setInt(1, obj.getVehicleId());
             pstmt.setDate(2, obj.getDate());
             pstmt.setBigDecimal(3, obj.getMilesTraveled());
             pstmt.setBigDecimal(4, obj.getUnitPrice());
+            pstmt.setInt(5, obj.getFcId());
             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {

@@ -68,6 +68,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
      * @param obj added object
      * @return true for success, false for fail
      */
+    @Override
     public boolean add(RouteDTO obj) {
         Connection con =null;
         PreparedStatement pstmt = null;
@@ -78,6 +79,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
             
             pstmt.setInt(1, obj.getRouteNumber());
             pstmt.setString(2, obj.getDescription());   
+            pstmt.executeUpdate();
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,6 +108,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
      * @param objId object id
      * @return object
      */
+    @Override
     public RouteDTO getById(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -115,7 +118,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE user_id = ?");
+                    "SELECT * FROM route WHERE route_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -151,6 +154,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
      * @param obj updated object
      * @return true for success, false for fail
      */
+    @Override
     public boolean update(RouteDTO obj) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -158,13 +162,13 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE users SET user_name = ?, email = ?, password = ?, user_type = ?, "
-                    + "route_id = ? WHERE user_id = ?");
+                    "UPDATE route SET route_number = ?, description = ? WHERE route_id = ?");
             pstmt.setInt(1, obj.getRouteNumber());
             pstmt.setString(2, obj.getDescription()); 
+            pstmt.setInt(3, obj.getRouteId());
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected == 0) {
+            int rows = pstmt.executeUpdate();
+            if (rows == 0) {
                 ret = false;
             }
         } catch (SQLException e) {
@@ -191,6 +195,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
      * @param objId object id
      * @return true for success, false for fail
      */
+    @Override
     public boolean delete(int objId) {
         Connection con;
         PreparedStatement pstmt = null;
@@ -198,7 +203,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM users WHERE user_id = ?");
+                    "DELETE FROM route WHERE route_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {

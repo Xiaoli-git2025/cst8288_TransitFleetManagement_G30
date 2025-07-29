@@ -35,6 +35,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
             objs = new ArrayList<RouteScheduleDTO>();
             while (rs.next()) {
                 RouteScheduleDTO obj = new RouteScheduleDTO();
+                obj.setScheduleId(rs.getInt("schedule_id"));
                 obj.setRouteId(rs.getInt("route_id"));
                 obj.setStationId(rs.getInt("station_id"));
                 obj.setScheduleNumber(rs.getInt("schedule_number"));
@@ -84,7 +85,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
             pstmt.setInt(3, obj.getScheduleNumber());
             pstmt.setTime(4, obj.getScheduleArriveTime());
             pstmt.setTime(5, obj.getScheduleDepartTime());
-
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -127,7 +128,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new RouteScheduleDTO();
-                obj.setRouteId(rs.getInt("schedule_id"));
+                obj.setScheduleId(rs.getInt("schedule_id"));
                 obj.setRouteId(rs.getInt("route_id"));
                 obj.setStationId(rs.getInt("station_id"));
                 obj.setScheduleNumber(rs.getInt("schedule_number"));
@@ -159,7 +160,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
     
     /**
      * update object
-     * @param object updated object
+     * @param obj updated object
      * @return true for success, false for fail
      */
     @Override
@@ -178,6 +179,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
             pstmt.setInt(3, obj.getScheduleNumber());
             pstmt.setTime(4, obj.getScheduleArriveTime());
             pstmt.setTime(5, obj.getScheduleDepartTime());
+            pstmt.setInt(6,obj.getScheduleId());
             
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
@@ -215,7 +217,7 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "DELETE FROM schedule WHERE schedule_id = ?");
+                    "DELETE FROM routeschedule WHERE schedule_id = ?");
             pstmt.setInt(1, objId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
