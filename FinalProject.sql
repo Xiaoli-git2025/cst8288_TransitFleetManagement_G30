@@ -127,9 +127,12 @@ CREATE TABLE VehicleComponent (
     FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
 );
 INSERT INTO VehicleComponent(component_name, vehicle_id, used_hour, threshold_hour) VALUES
-('Component_1', 1, 177, 500),
-('Component_2', 2, 356, 450),
-('Component_3', 3, 247, 500);
+('carbreakelectronic', 1, 177, 500),
+('carbreakgas', 2, 177, 500),
+('carbreakhybrid', 3, 177, 500),
+('enginegas', 2, 180, 500),
+('engineelectronic', 1, 270, 600),
+('enginehybrid', 3, 300, 550);
 
 -- MaintenanceAlert table
 CREATE TABLE MaintenanceAlert (
