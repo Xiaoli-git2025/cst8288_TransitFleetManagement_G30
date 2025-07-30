@@ -9,11 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layout.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JTransit Fleet Management System - Vehicle</title>
     </head>
-    <body>
-        <h1>Edit Component</h1>
-        <div class="header-buttons">
+    <body class="body">
+        <!-- Header -->
+        <div class="header">
+            <h1>Component-Update</h1>
+            <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>
                 </button>
@@ -21,8 +26,32 @@
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </div>
+        </div>
+        <!-- Main content with sidebar -->
+        <div class="main">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <span class="menu-title">Route Management</span>
+                        <ul class="submenu">
+                            <li><a href="${pageContext.request.contextPath}/Admin?get=route">Route</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Admin?get=station">Station</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Admin?get=route_schedule">Route Schedule</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-title">Vehicle Management</span>
+                        <ul class="submenu">
+                            <li><a href="${pageContext.request.contextPath}/Admin?get=vehicle">Vehicle</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Admin?get=component">Vehicle Component</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        <div class="container">
+        <div class="box">
         <form action ="${pageContext.request.contextPath}/VehicleComponentControl" method="post">
-            <input type="hidden" name="action" value="EditComponent">
         <table>
             <tr>
                 <td>Component ID:</td>
@@ -44,6 +73,27 @@
                 <td><input type="number" name="threshold_hour" required></td>
             </tr>
             </table>
-            <button type="submit">Edit Component</button>
+            <button type="submit" name="action" value="UpdateComponent" class="btn btn-sm btn-primary">Edit Component</button>
+        </form>
+        </div>
+        </div>
     </body>
+    <div class="footer">
+                <p>Contact us at: tfms@algonquinlive.com | Phone: (123) 456-7890 | 
+                    <a href="linkedin.html">LinkedIn</a>
+                </p>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const menuItems = document.querySelectorAll(".menu-item .menu-title");
+
+                    menuItems.forEach(function (menuTitle) {
+                        menuTitle.addEventListener("click", function () {
+                            const submenu = this.nextElementSibling;
+                            submenu.classList.toggle("show");
+                        });
+                    });
+                });
+            </script>
 </html>

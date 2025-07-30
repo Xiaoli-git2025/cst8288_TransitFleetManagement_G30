@@ -39,25 +39,33 @@ public class ManagerControl extends HttpServlet {
                 case "alert_type":
                     //getAlertTypes, list, add, delete, update
                     request.getRequestDispatcher("/views/manager/AlertTypeView.jsp").forward(request, response);
+                    break;
                 case "all_alerts":
                     //getActiveAlerts, list, update resolved
                     request.getRequestDispatcher("/views/manager/ActiveAlertView.jsp").forward(request, response);
+                    break;
                 case "maintenance_schedule":
                     //getActiveMaintenanceSchedule, list, add, delete, update
                     request.getRequestDispatcher("/views/manager/ActiveMaintScheduleView.jsp").forward(request, response);
+                    break;
                 case "operator_performance":
                     //getPerformance, list, sort, filtereByOperatorName
                     request.getRequestDispatcher("/views/manager/OperatorPerformanceView.jsp").forward(request, response);
+                    break;
                 case "maintenance_report":
                     //getAllMaintenanceSchedule, list, sort
                     request.getRequestDispatcher("/views/manager/AllMaintScheduleView.jsp").forward(request, response);
+                    break;
                 case "maintenance_cost":
                     //getAllCostOnMaintenance, list, group by alert type, vehicle, component
                     request.getRequestDispatcher("/views/manager/AllCostOnMaintView.jsp").forward(request, response);
+                    break;
                 case "fuel_energy_cost":
                     //getAllCostOnFuelEnergy, list, group by vehicle type, vehicle
                     request.getRequestDispatcher("/views/manager/AllCostOnFuelEnergyView.jsp").forward(request, response);
+                    break;
                 default:
+                    break;
             }
         } catch (Exception ex) {
             Logger.getLogger(AdminControl.class.getName()).log(Level.SEVERE, null, ex);

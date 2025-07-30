@@ -1,18 +1,20 @@
 package controller;
 
 import business.VehicleComponentBusinessLogic;
+import static cn.jdevelops.log.LogUtils.error;
 import model.VehicleComponentDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@WebServlet("/VehicleComponentControl")
+@WebServlet(name = "VehicleComponentControl", urlPatterns = {"/VehicleComponentControl"})
 public class VehicleComponentControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public VehicleComponentBusinessLogic componentLogic;
@@ -26,12 +28,6 @@ public class VehicleComponentControl extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         try {
-            HttpSession session = request.getSession();
-            if (session.getAttribute("authenticated") == null) {
-                response.sendRedirect(request.getContextPath() + "/views/admin/VehicleComponent.jsp");
-                return;
-            }
-
             String action = request.getParameter("action");
             if (action == null) {
                 getAllComponents(request, response);
@@ -44,10 +40,7 @@ public class VehicleComponentControl extends HttpServlet {
                     break;
                 case "UpdateComponent": 
                     updateComponent(request, response);
-                    break;
-                case "DeleteComponent": 
-                    deleteComponent(request, response);
-                    break;
+                    break;              
                 case "GetAllComponents": 
                     getAllComponents(request, response);
                     break;
@@ -62,8 +55,21 @@ public class VehicleComponentControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        doPost(request, response);
+        try {
+            String actions = request.getParameter("actions");
+            
+            switch (actions) {
+                case "DeleteComponent":
+                        deleteComponent(request, response);
+                        break;
+                default:
+                    getAllComponents(request,response);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VehicleComponentControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
 
     public void getAllComponents(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
@@ -76,7 +82,7 @@ public class VehicleComponentControl extends HttpServlet {
     private void addComponent(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         VehicleComponentDTO component = new VehicleComponentDTO();
-        component.setComponentId(Integer.parseInt(request.getParameter("Component_id")));
+        //component.setComponentId(Integer.parseInt(request.getParameter("Component_id")));
         component.setComponentName(request.getParameter("Component_name"));
         component.setVehicleId(Integer.parseInt(request.getParameter("Vehicle_id")));
         component.setUsedHour(Integer.parseInt(request.getParameter("used_hour")));
@@ -84,7 +90,7 @@ public class VehicleComponentControl extends HttpServlet {
 
         boolean success = componentLogic.addObject(component);
         if (success) {
-            response.sendRedirect(request.getContextPath() + "/VehicleComponentControl?action=GetAllComponents&msg=Component+added+successfully");
+            getAllComponents(request,response);       
         } else {
             request.setAttribute("error", "Failed to add component");
             request.getRequestDispatcher("/views/admin/AddComponent.jsp").forward(request, response);
@@ -102,7 +108,7 @@ public class VehicleComponentControl extends HttpServlet {
 
         boolean success = componentLogic.updateObject(component);
         if (success) {
-            response.sendRedirect(request.getContextPath() + "/VehicleComponentControl?action=GetAllComponents&msg=Component+updated+successfully");
+            getAllComponents(request,response);
         } else {
             request.setAttribute("error", "Failed to update component");
             request.getRequestDispatcher("/views/admin/EditComponent.jsp").forward(request, response);
@@ -114,10 +120,9 @@ public class VehicleComponentControl extends HttpServlet {
         int componentId = Integer.parseInt(request.getParameter("componentId"));
         boolean success = componentLogic.deleteObject(componentId);
         if (success) {
-            response.sendRedirect(request.getContextPath() + "/VehicleComponentControl?action=GetAllComponents&msg=Component+deleted+successfully");
+            getAllComponents(request,response);
         } else {
-            request.setAttribute("error", "Failed to delete component");
-            getAllComponents(request, response); 
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 }

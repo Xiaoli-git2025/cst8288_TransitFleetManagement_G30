@@ -81,9 +81,9 @@
                             <td><%= vehicleComponent.getUsedHour()%></td>
                             <td><%= vehicleComponent.getThresholdHour()%></td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/VehicleComponentControl?action=UpdateComponent&componentId=<%= vehicleComponent.getComponentId()%>"
+                                <a href="${pageContext.request.contextPath}/views/admin/EditComponent.jsp"
                                    class="btn btn-sm btn-primary">Edit</a>
-                                <a href="${pageContext.request.contextPath}/VehicleComponentControl?action=DeleteComponent&componentId=<%= vehicleComponent.getComponentId()%>"
+                                <a href="${pageContext.request.contextPath}/VehicleComponentControl?actions=DeleteComponent&componentId=<%= vehicleComponent.getComponentId()%>"
                                    class="btn btn-sm btn-danger" 
                                    onclick="return confirm('Are you sure you want to delete this component?')">Delete</a>
                             </td>

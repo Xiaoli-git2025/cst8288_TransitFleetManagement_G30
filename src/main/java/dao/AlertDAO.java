@@ -217,4 +217,8 @@ public class AlertDAO implements DAOInterface<AlertDTO>{
         }
         return ret;
     }
+
+    public AlertDTO getAlertById(int alertId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
