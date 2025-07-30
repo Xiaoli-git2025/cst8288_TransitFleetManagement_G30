@@ -22,7 +22,7 @@ public class LoginRegisterBusinessLogic {
             List<UserDTO> user_list = user_dao.getAll();
             for (UserDTO user : user_list) {
                 if (user.getEmail().equals(email) && user.getPassword().equals(password)){
-                    user_role = user.getRole();
+                    user_role = user.getRole()+","+user.getUser_id();
                     break;
                 }
             }   

@@ -55,19 +55,25 @@ public class AdminControl extends HttpServlet {
                     List<RouteDTO> routes = logic.getAllObjects();
                     request.setAttribute("routes", routes);
                     request.getRequestDispatcher("/views/admin/RouteView.jsp").forward(request, response);
+                    break;
                 case "station":
                     //getAllStations, list, add, delete, update
                     request.getRequestDispatcher("/views/admin/StationView.jsp").forward(request, response);
+                    break;
                 case "route_schedule":
                     //getAllRouteSchedules, list add, delete, uodate
                     request.getRequestDispatcher("/views/admin/RouteScheduleView.jsp").forward(request, response);
+                    break;
                 case "vehicle":
                     //getAllVehicles, list ,add, delete, update
                     request.getRequestDispatcher("/views/admin/VehicleView.jsp").forward(request, response);
+                    break;
                 case "component":
                     //getAllComponents, list, add, delete, update
                     request.getRequestDispatcher("/views/admin/ComponentView.jsp").forward(request, response);
+                    break;
                 default:
+                    break;
             }
         } catch (SQLException ex) {
             Logger.getLogger(AdminControl.class.getName()).log(Level.SEVERE, null, ex);

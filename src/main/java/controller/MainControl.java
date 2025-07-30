@@ -14,7 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import business.*;
-import model.RouteDTO;
+import business.alert_maint.*;
+import dao.*;
+import model.*;
 import java.util.List;
 
 /**
@@ -68,7 +70,12 @@ public class MainControl extends HttpServlet {
             String action = request.getParameter("action");
             switch(action) {
                 case "Login":
-                    switch(login_register_logic.checkAccount(request.getParameter("email"), request.getParameter("password"))){
+                    String role = login_register_logic.checkAccount(request.getParameter("email"), request.getParameter("password"));
+                    String[] roles = role.split(",");
+                    role = roles[0];
+                    int user_id = roles.length > 1 ? Integer.parseInt(roles[1]) : 0;
+                    request.getSession().setAttribute("user_id", user_id);
+                    switch(role){
                         case "not_found":
                             request.setAttribute("errorMsg", "User not found, please register firstly");
                             request.getRequestDispatcher("/error.jsp").forward(request, response);
@@ -77,6 +84,12 @@ public class MainControl extends HttpServlet {
                             request.getRequestDispatcher("/views/operator/OperatorDashboard.jsp").forward(request, response);
                             break;
                         case "manager":
+                            //setup observer
+                            MaintenanceAlertDAO alertDAO = new MaintenanceAlertDAO();
+                            AlertObserver alertObserver = new AlertObserver(alertDAO);
+                            MaintenanceSubject subject = new MaintenanceSubject();
+                            subject.addObserver(alertObserver);
+                            request.getSession().setAttribute("maintenanceSubject", subject);
                             request.getRequestDispatcher("/views/manager/ManagerDashboard.jsp").forward(request, response);
                             break;
                         default:
@@ -84,6 +97,7 @@ public class MainControl extends HttpServlet {
                             break;
                     }
                     break;
+
                 case "Register":
                     RouteBusinessLogic route_logic = new RouteBusinessLogic();
                     List<RouteDTO> routes = route_logic.getAllObjects();
@@ -94,9 +108,9 @@ public class MainControl extends HttpServlet {
                     String name = request.getParameter("name");
                     String email = request.getParameter("email");
                     String password = request.getParameter("password");
-                    String role = request.getParameter("role");
+                    String user_type = request.getParameter("role");
                     int route_id = Integer.parseInt(request.getParameter("route_id"));
-                    if(login_register_logic.AddUser(email, name, password, role, route_id))
+                    if(login_register_logic.AddUser(email, name, password, user_type, route_id))
                         request.getRequestDispatcher("/index.jsp").forward(request, response);
                     else{
                         request.setAttribute("errorMsg", "Register fail");
