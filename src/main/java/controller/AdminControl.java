@@ -29,12 +29,14 @@ public class AdminControl extends HttpServlet {
      * business logic instance
      */
     private RouteBusinessLogic logic;
+    private VehicleComponentBusinessLogic vclogic;
     /**
      * init method
      */
     @Override
     public void init() {
         logic = new RouteBusinessLogic();
+        vclogic = new VehicleComponentBusinessLogic();
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -66,7 +68,9 @@ public class AdminControl extends HttpServlet {
                     request.getRequestDispatcher("/views/admin/VehicleView.jsp").forward(request, response);
                 case "component":
                     //getAllComponents, list, add, delete, update
-                    request.getRequestDispatcher("/views/admin/ComponentView.jsp").forward(request, response);
+                    List<VehicleComponentDTO> vehicleComponent = vclogic.getAllObjects();
+                    request.setAttribute("vehicleComponents", vehicleComponent);
+                    request.getRequestDispatcher("/views/admin/VehicleComponent.jsp").forward(request, response);
                 default:
             }
         } catch (SQLException ex) {
