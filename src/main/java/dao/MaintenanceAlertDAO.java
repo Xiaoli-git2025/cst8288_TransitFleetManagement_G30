@@ -83,6 +83,7 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO>{
             pstmt.setDate(3, obj.getAlertDate());
             pstmt.setInt(4, obj.getReporterId());
             pstmt.setBoolean(5, obj.isResolved());
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -119,7 +120,7 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO>{
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "SELECT * FROM users WHERE maintenance_id = ?");
+                    "SELECT * FROM maintenancealert WHERE maintenance_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
