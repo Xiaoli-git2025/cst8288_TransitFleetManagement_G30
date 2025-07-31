@@ -21,6 +21,7 @@ public class AlertBusinessLogic {
      */
     private VehicleDAO vehicleDao = null;
     private MaintenanceAlertDAO maintAlertDao = null;
+    private MaintenanceScheduleDAO scheduleDao = null;
     private VehicleComponentDAO componentDao = null;
     private AlertDAO alertDao = null;
     private UserDAO userDao = null;
@@ -30,6 +31,7 @@ public class AlertBusinessLogic {
     public AlertBusinessLogic() {
         vehicleDao = new VehicleDAO();
         maintAlertDao = new MaintenanceAlertDAO();
+        scheduleDao = new MaintenanceScheduleDAO();
         componentDao = new VehicleComponentDAO();
         alertDao = new AlertDAO();
         userDao = new UserDAO();
@@ -117,5 +119,39 @@ public class AlertBusinessLogic {
     
     public boolean updateMaintAlert(MaintenanceAlertDTO malert){
         return maintAlertDao.update(malert);
+    }
+    
+    public String getMaintAlertReporterByMAlertId(int malert_id){
+        return userDao.getById(maintAlertDao.getById(malert_id).getReporterId()).getName();
+    }
+    
+    public List<MaintenanceAlertDTO> getActiveMaintAlert() throws SQLException {
+        List<MaintenanceAlertDTO> all =  maintAlertDao.getAll();
+        Iterator<MaintenanceAlertDTO> iterator = all.iterator();
+        while (iterator.hasNext()) {
+            MaintenanceAlertDTO alert = iterator.next();
+
+            if (alert.isResolved()) {
+                iterator.remove(); 
+            }
+        }
+        return all;
+    }
+    
+    public boolean addMaintSchedule(MaintenanceScheduleDTO schedule){
+        return scheduleDao.add(schedule);
+    }
+    
+    public List<MaintenanceScheduleDTO> getActiveSchedules() throws SQLException {
+        List<MaintenanceScheduleDTO> all =  scheduleDao.getAll();
+        Iterator<MaintenanceScheduleDTO> iterator = all.iterator();
+        while (iterator.hasNext()) {
+            MaintenanceScheduleDTO schedule = iterator.next();
+
+            if (schedule.isCompleted()) {
+                iterator.remove(); 
+            }
+        }
+        return all;
     }
 }

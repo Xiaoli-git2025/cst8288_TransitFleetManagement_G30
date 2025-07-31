@@ -10,9 +10,7 @@
 <%@page import="business.AlertBusinessLogic" %>
 <%@page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    List<VehicleDTO> vehicles = (List<VehicleDTO>) request.getAttribute("vehicles");
-%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,19 +39,20 @@
             <nav class="sidebar">
                 <ul class="menu">
                     <li class="menu-item">
-                        <span class="menu-title">Record Status</span>
+                        <span class="menu-title">Alert Management</span>
                         <ul class="submenu">
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=stop_time">Log Stop Time</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=fuel_consumption">Log Fuel Consumption</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=operator_alert">Generate Alert</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Manager?get=alert_type">Alert Type</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Manager?get=all_alerts">Check Alert</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Manager?get=maintenance_schedule">Maintenance Schedule</a></li>
                         </ul>
                     </li>
                     <li class="menu-item">
-                        <span class="menu-title">Information Check</span>
+                        <span class="menu-title">Generate Reports</span>
                         <ul class="submenu">
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=vehicle_alert">Vehicle Alert</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=maintance_schedule">Maintenance Schedule</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=operator_performance">Individual Performance</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Manager?get=operator_performance">Operator Performance</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Manager?get=maintenance_report">Maintenance Report</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Manager?get=maintenance_cost">Maintenance Expenses</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Manager?get=fuel_energy_cost">Fuel/Energy Cost</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -62,28 +61,7 @@
             <!-- Main container -->
             <div class="container">
                 <div class="box_with_menu">
-                    <form method="post" action="${pageContext.request.contextPath}/MaintenanceAlert">
-                        
-                        <label for="vehicle_id">Select Vehicle</label>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                        <%
-                        int selectedVehicleId = (request.getAttribute("cur_vehicle") != null)
-                            ? (Integer) request.getAttribute("cur_vehicle")
-                            : 0;
-                        %>
-                        
-                        <select id="vehicleSelect" name="vehicle_id">
-                             <% for (VehicleDTO vehicle : vehicles) {
-                                int id = vehicle.getVehicleId();
-                                String selected = (id == selectedVehicleId) ? "selected" : "";
-                             %>
-                                <option value="<%= id %>" <%= selected %>><%= vehicle.getVehicleNumber() %></option>
-                             <% } %>
-                        </select>
-                        
-                        <input type="submit" name="action" class="submit-btn" value="Load" />
-                        </div>
-
+                    <form method="post" action="${pageContext.request.contextPath}/ActiveMaintenanceAlert">
                         <%
                             List<MaintenanceAlertDTO> alerts = (List<MaintenanceAlertDTO>) request.getAttribute("maint_alerts");
                             if (alerts != null && !alerts.isEmpty()) {
@@ -97,8 +75,9 @@
                                     <th>Alert Type</th>
                                     <th>Component</th>
                                     <th>Alert Date</th>
+                                    <th>Reporter</th>
                                     <th>Resolved</th>
-                                    <th style="width:200px;">Actions</th>
+                                    <th style="width:500px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,11 +87,12 @@
                                     <td><%= logic.getAlertType(alert.getAlertId())%></td>
                                     <td><%= logic.getComponentNameByComponentId(alert.getComponentId())%></td>
                                     <td><%= alert.getAlertDate()%></td>
+                                    <td><%= logic.getMaintAlertReporterByMAlertId(alert.getMaintenanceId())%></td>
                                     <td><input type="checkbox" disabled <%= alert.isResolved() ? "checked" : "" %> /></td>
                                     <td>
-                                        <a href="<%= request.getContextPath()%>/MaintenanceAlert?alert_id=<%= alert.getMaintenanceId()%>&get=update_alert"
-                                           class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="<%= request.getContextPath()%>/MaintenanceAlert?alert_id=<%= alert.getMaintenanceId()%>&get=delete_alert"
+                                        <a href="<%= request.getContextPath()%>/ActiveMaintenanceAlert?alert_id=<%= alert.getMaintenanceId()%>&get=add_sechedule"
+                                           class="btn btn-sm btn-primary">Add Maintenance Schedule</a>
+                                        <a href="<%= request.getContextPath()%>/AvtiveMaintenanceAlert?alert_id=<%= alert.getMaintenanceId()%>&get=delete_alert"
                                            class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to delete this alert?');">Delete</a>
                                     </td>
                                 </tr>
@@ -121,9 +101,7 @@
                         </table>
                         <%
                             }
-                        %>
-                        
-                        <input type="submit" name="action" class="submit-btn" value="Report New Alert" />                      
+                        %>                    
                     </form>
                 </div>
             </div>
