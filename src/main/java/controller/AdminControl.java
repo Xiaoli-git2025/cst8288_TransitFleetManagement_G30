@@ -32,6 +32,7 @@ public class AdminControl extends HttpServlet {
     private RouteBusinessLogic logic;
     private VehicleComponentBusinessLogic vclogic;
     private VehicleBusinessLogic vlogic;
+    private StationBusinessLogic sblogic;
     /**
      * init method
      */
@@ -40,6 +41,7 @@ public class AdminControl extends HttpServlet {
         logic = new RouteBusinessLogic();
         vclogic = new VehicleComponentBusinessLogic();
         vlogic = new VehicleBusinessLogic();
+        sblogic = new StationBusinessLogic();
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -62,8 +64,9 @@ public class AdminControl extends HttpServlet {
                     request.getRequestDispatcher("/views/admin/RouteView.jsp").forward(request, response);
                     break;
                 case "station":
-                    //getAllStations, list, add, delete, update
-                    request.getRequestDispatcher("/views/admin/StationView.jsp").forward(request, response);
+                    List<StationDTO> station = sblogic.getAllObjects();
+                    request.setAttribute("stations", station);
+                    request.getRequestDispatcher("/views/admin/StationView.jsp").forward(request, response); 
                     break;
                 case "route_schedule":
                     //getAllRouteSchedules, list add, delete, uodate
