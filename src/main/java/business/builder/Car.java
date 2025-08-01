@@ -15,17 +15,15 @@ public class Car {
     private String fuelType;
     private int routeId;
     private int capacity;
-    private int componentId;
     //private int vehicleId;
     
-    public Car(String vehicleNumber, BigDecimal consumptionRate, int maxPassenger, String fuelType, int routeId, int capacity, int componentId) {
+    public Car(String vehicleNumber, BigDecimal consumptionRate, int maxPassenger, String fuelType, int routeId, int capacity) {
         this.vehicleNumber = vehicleNumber;
         this.consumptionRate = consumptionRate;
         this.maxPassenger = maxPassenger;
         this.fuelType = fuelType;
         this.routeId = routeId;
         this.capacity = capacity;
-        this.componentId = componentId;
         this.vehicle = new VehicleDTO(); 
     }
 
@@ -58,9 +56,6 @@ public class Car {
         return capacity;
     }
 
-    public int getComponentId() {
-        return componentId;
-    }
     /*
     public void setVehicleId(int vehicleId) {
 
@@ -89,10 +84,6 @@ public class Car {
 
     public void setCapacity() {
         this.capacity = vehicle.getCapacity();
-    }
-
-    public void setComponentId() {
-        this.componentId = vehicle.getComponentId();
     }
 
     public void setVehicle(VehicleDTO vehicle) {

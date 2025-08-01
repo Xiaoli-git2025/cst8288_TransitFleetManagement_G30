@@ -1,7 +1,7 @@
 <%-- 
-    Document   : AddVehicle
-    Created on : Jul 31, 2025, 3:30:16 p.m.
-    Author     : shan cai
+    Document   : AddStation
+    Created on : Aug 1, 2025, 11:42:49 a.m.
+    Author     : shano
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,12 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <title>JTransit Fleet Management System - Vehicle</title>
+        <title>JTransit Fleet Management System - Station</title>
     </head>
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Vehicle-Add</h1>
+            <h1>Station-Add</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>
@@ -50,43 +50,20 @@
             </nav>
             <div class="container">
                 <div class="box">
-                    <form action="${pageContext.request.contextPath}/VehicleControl" method="post">
-
+                    <form action="${pageContext.request.contextPath}/StationControl" method="post">
+                          
                         <table>
                             <tr>
-                             <td>Vehicle ID:</td>
-                                <td><input type ="number" name ="vehicle_id" required></td>
+                             <td>Station ID:</td>
+                                <td><input type ="number" name ="station_id" required></td>
                             </tr>
 
                             <tr>
-                                <td>Vehicle Number:</td>
-                                <td><input type="text" name="vehicle_number" required></td>
-                            </tr>
-                            <tr>
-                                <td>Consumption Rate:</td>
-                                <td><input type="number" name="consumption_rate" required></td>
-                            </tr>
-                            <tr>
-                                <td>Max Passenger:</td>
-                                <td><input type="number" name="max_passenger" required></td>
-                            </tr>
-                            <tr>
-                                <td>Fuel Type:</td>
-                                <td><input type="text" name="fuel_type" required></td> 
-                            </tr>
-                            </tr>
-                            <tr>
-                                <td>Route ID:</td>
-                                <td><input type="number" name="route_id" required></td>
-                            </tr>
-                            </tr>
-                            <tr>
-                                <td>Capacity:</td>
-                                <td><input type="number" name="capacity" required></td>
-                            </tr>
+                                <td>Station Name:</td>
+                                <td><input type="text" name="station_name" required></td>
                             </tr>
                         </table>
-                        <button type="submit" name="action" value="AddVehicle" class="btn btn-sm btn-primary">Add Vehicle</button>
+                        <button type="submit" name="action" value="AddStation" class="btn btn-sm btn-primary">Add Station</button>
                     </form>
                 </div>
             </div>
