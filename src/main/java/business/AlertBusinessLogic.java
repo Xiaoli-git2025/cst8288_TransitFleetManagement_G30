@@ -180,11 +180,11 @@ public class AlertBusinessLogic {
     public MaintenanceScheduleDTO getMaintScheduleByScheduleId(int shcedule_id){
         return scheduleDao.getById(shcedule_id);
     }
-    
+
     public boolean updateMaintSchedule(MaintenanceScheduleDTO schedule){
         return scheduleDao.update(schedule);
     }
-    
+
     public boolean deleteScheduleById(int schedule_id){
         return scheduleDao.delete(schedule_id);
     }
@@ -199,5 +199,9 @@ public class AlertBusinessLogic {
         }
         else
             return null;
+    }
+
+    public boolean deleteMaintSchedule(int schedule_id){
+        return scheduleDao.delete(schedule_id);
     }
 }

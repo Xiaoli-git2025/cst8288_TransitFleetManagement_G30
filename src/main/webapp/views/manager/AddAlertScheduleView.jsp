@@ -21,7 +21,7 @@
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Manager - Add Maintenance Schedule</h1>
+            <h1>Manager - Maintenance Schedule</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>

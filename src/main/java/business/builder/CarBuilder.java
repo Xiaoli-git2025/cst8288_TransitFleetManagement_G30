@@ -58,6 +58,5 @@ public class CarBuilder {
             fuelType,
             routeId,
             capacity);
-                
     }
 }

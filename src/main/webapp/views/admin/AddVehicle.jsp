@@ -84,6 +84,9 @@
                                 <td>Capacity:</td>
                                 <td><input type="number" name="capacity" required></td>
                             </tr>
+                            <tr>
+                                <td>Component ID:</td>
+                                <td><input type="number" name="component_id" required></td>
                             </tr>
                         </table>
                         <button type="submit" name="action" value="AddVehicle" class="btn btn-sm btn-primary">Add Vehicle</button>

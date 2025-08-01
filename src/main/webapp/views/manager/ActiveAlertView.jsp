@@ -22,7 +22,7 @@
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Operator - Log Alert</h1>
+            <h1>Manager - Maintenance Alert</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>
