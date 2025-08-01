@@ -26,14 +26,13 @@ public class VehicleDTO {
 
     // Total capacity of the vehicle (could represent seats or weight limit)
     private int capacity;
-    
-    private int componentId;
+
 
     // Constructors
     public VehicleDTO() {}
 
     public VehicleDTO(int vehicleId, String vehicleNumber, java.math.BigDecimal consumptionRate,
-                      int maxPassenger, String fuelType, int routeId, int capacity, int componentId) {
+                      int maxPassenger, String fuelType, int routeId, int capacity) {
         this.vehicleId = vehicleId;
         this.vehicleNumber = vehicleNumber;
         this.consumptionRate = consumptionRate;
@@ -41,7 +40,7 @@ public class VehicleDTO {
         this.fuelType = fuelType;
         this.routeId = routeId;
         this.capacity = capacity;
-        this.componentId = componentId;
+
     }
 
     // Getters and Setters
@@ -99,12 +98,7 @@ public class VehicleDTO {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
-    public int getComponentId(){
-        return componentId;
-    }
-    public void setComponentId(int componentId){
-        this.componentId = componentId;
+
     }
     
 }

@@ -26,11 +26,10 @@ public class VehicleBusinessLogic {
      * @param maxPassenger Maximum passenger capacity
      * @param routeId Associated route ID
      * @param capacity Vehicle capacity
-     * @param componentId Engine component ID
      * @return true if creation was successful
      */
     public boolean createVehicle(String type, String vehicleNumber, BigDecimal consumptionRate,
-                               int maxPassenger, int routeId, int capacity, int componentId) {
+                               int maxPassenger, int routeId, int capacity) {
         // Use Simple Factory to get appropriate builder
         CarBuilder builder = CarDirector.createCarBuilder(type);
         if (builder == null) {
@@ -43,7 +42,6 @@ public class VehicleBusinessLogic {
                 .withMaxPassenger(maxPassenger)
                 .withRouteId(routeId)
                 .withCapacity(capacity)
-                .withEngine(componentId)
                 .build();
         // Convert to DTO and persist
         VehicleDTO vehicleDTO = convertToDTO(car);
@@ -108,7 +106,6 @@ public class VehicleBusinessLogic {
         dto.setFuelType(car.getFuelType());
         dto.setRouteId(car.getRouteId());
         dto.setCapacity(car.getCapacity());
-        dto.setComponentId(car.getComponentId());
         return dto;
     }
 
@@ -125,7 +122,6 @@ public class VehicleBusinessLogic {
                 .withFuelType(dto.getFuelType())
                 .withRouteId(dto.getRouteId())
                 .withCapacity(dto.getCapacity())
-                .withEngine(dto.getComponentId())
                 .build();
     }
 }

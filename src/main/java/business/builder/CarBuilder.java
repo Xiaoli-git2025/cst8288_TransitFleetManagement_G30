@@ -8,7 +8,6 @@ public class CarBuilder {
     private String fuelType;
     private int routeId;
     private int capacity;
-    private int componentId;
 
     public CarBuilder() {}
 
@@ -19,16 +18,10 @@ public class CarBuilder {
         this.fuelType = car.getFuelType();
         this.routeId = car.getRouteId();
         this.capacity = car.getCapacity();
-        this.componentId = car.getComponentId();
     }
 
     public CarBuilder withVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
-        return this;
-    }
-
-    public CarBuilder withEngine(int componentId) {
-        this.componentId = componentId;
         return this;
     }
 
@@ -64,8 +57,7 @@ public class CarBuilder {
             maxPassenger,
             fuelType,
             routeId,
-            capacity,
-            componentId
-        );
+            capacity);
+                
     }
 }
