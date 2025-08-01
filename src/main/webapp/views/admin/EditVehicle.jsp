@@ -1,6 +1,6 @@
 <%-- 
     Document   : EditVehicle
-    Created on : Jul 29, 2025, 7:31:41 p.m.
+    Created on : Jul 31, 2025, 3:36:42 p.m.
     Author     : shan cai
 --%>
 
@@ -17,7 +17,7 @@
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Component-Update</h1>
+            <h1>Vehicle-Update</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>
@@ -51,29 +51,45 @@
             </nav>
         <div class="container">
         <div class="box">
-        <form action ="${pageContext.request.contextPath}/VehicleComponentControl" method="post">
+        <form action ="${pageContext.request.contextPath}/VehicleControl" method="post">
         <table>
             <tr>
-                <td>Component ID:</td>
-                <td><input type="number" name="Component_id" required></td>
-            </tr>
-            <tr>
-                <td>Component Name:</td>
-                <td><input type="text" name="Component_name" required></td>
-            </tr>
-            <tr>
                 <td>Vehicle ID:</td>
-                <td><input type="number" name="Vehicle_id" required></td>
+                <td><input type ="number" name ="vehicle_id" required></td>
+            </tr>
                 <tr>
-                <td>Used Hour:</td>
-                <td><input type="number" name="used_hour" required></td>
-            </tr>
-            <tr>
-                <td>Threshold Hour:</td>
-                <td><input type="number" name="threshold_hour" required></td>
-            </tr>
+                    <td>Vehicle Number:</td>
+                    <td><input type="text" name="vehicle_number" required></td>
+                </tr>
+                <tr>
+                    <td>Consumption Rate:</td>
+                    <td><input type="number" name="consumption_rate" required></td>
+                </tr>
+                <tr>
+                    <td>Max Passenger:</td>
+                    <td><input type="number" name="max_passenger" required></td>
+                </tr>
+                <tr>
+                    <td>Fuel Type:</td>
+                    <td><input type="text" name="fuel_type" required></td> 
+                </tr>
+                </tr>
+                <tr>
+                    <td>Route ID:</td>
+                    <td><input type="number" name="route_id" required></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>Capacity:</td>
+                    <td><input type="number" name="capacity" required></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>Component ID:</td>
+                    <td><input type="number" name="component_id" required></td>
+                </tr>
             </table>
-            <button type="submit" name="action" value="UpdateComponent" class="btn btn-sm btn-primary">Edit Component</button>
+            <button type="submit" name="action" value="UpdateVehicle" class="btn btn-sm btn-primary">Edit Vehicle</button>
         </form>
         </div>
         </div>

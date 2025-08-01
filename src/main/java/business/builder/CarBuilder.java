@@ -1,45 +1,71 @@
-/* File: DataSource.java
- * Author: Shan Cai
- * Date: 2025/7/29
- * Description: car builder
- */
 package business.builder;
+import java.math.BigDecimal;
 
-/**
- * Car builder with adding component and return a car object
- * @author Shan Cai
- */
 public class CarBuilder {
-    
-    /**This is the component of a car*/
-    private String carBreak;
-    /**This is the component of a car*/
-    private String engine;
-    
-    /**
-     * method to add break to a car
-     * @param carBreak is the component of a car
-     * @return this is the component of a car
-     */
-    public CarBuilder addCarBreak(String carBreak){
-        this.carBreak = carBreak;
-        return this;
+    private String vehicleNumber;
+    private BigDecimal consumptionRate;
+    private int maxPassenger;
+    private String fuelType;
+    private int routeId;
+    private int capacity;
+    private int componentId;
+
+    public CarBuilder() {}
+
+    public CarBuilder(Car car) {
+        this.vehicleNumber = car.getVehicleNumber();
+        this.consumptionRate = car.getConsumptionRate();
+        this.maxPassenger = car.getMaxPassenger();
+        this.fuelType = car.getFuelType();
+        this.routeId = car.getRouteId();
+        this.capacity = car.getCapacity();
+        this.componentId = car.getComponentId();
     }
-    /**
-     * method to add engine
-     * @param engine is the component of a car
-     * @return this engine
-     */
-    public CarBuilder addEngine(String engine){
-        this.engine = engine;
+
+    public CarBuilder withVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
         return this;
     }
 
-    /**
-     * build method to return a car with components
-     * @return Car object
-     */
-    public Car build(){
-        return new Car(carBreak,engine);
+    public CarBuilder withEngine(int componentId) {
+        this.componentId = componentId;
+        return this;
+    }
+
+    public CarBuilder withConsumptionRate(BigDecimal consumptionRate) {
+        this.consumptionRate = consumptionRate;
+        return this;
+    }
+
+    public CarBuilder withMaxPassenger(int maxPassenger) {
+        this.maxPassenger = maxPassenger;
+        return this;
+    }
+
+    public CarBuilder withFuelType(String fuelType) {
+        this.fuelType = fuelType;
+        return this;
+    }
+
+    public CarBuilder withRouteId(int routeId) {
+        this.routeId = routeId;
+        return this;
+    }
+
+    public CarBuilder withCapacity(int capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public Car build() {
+        return new Car(
+            vehicleNumber,
+            consumptionRate,
+            maxPassenger,
+            fuelType,
+            routeId,
+            capacity,
+            componentId
+        );
     }
 }

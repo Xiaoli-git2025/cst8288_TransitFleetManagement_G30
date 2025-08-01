@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import business.*;
+import business.builder.VehicleBusinessLogic;
 import model.*;
 
 /**
@@ -30,6 +31,7 @@ public class AdminControl extends HttpServlet {
      */
     private RouteBusinessLogic logic;
     private VehicleComponentBusinessLogic vclogic;
+    private VehicleBusinessLogic vlogic;
     /**
      * init method
      */
@@ -37,6 +39,7 @@ public class AdminControl extends HttpServlet {
     public void init() {
         logic = new RouteBusinessLogic();
         vclogic = new VehicleComponentBusinessLogic();
+        vlogic = new VehicleBusinessLogic();
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -67,8 +70,9 @@ public class AdminControl extends HttpServlet {
                     request.getRequestDispatcher("/views/admin/RouteScheduleView.jsp").forward(request, response);
                     break;
                 case "vehicle":
-                    //getAllVehicles, list ,add, delete, update
-                    request.getRequestDispatcher("/views/admin/VehicleView.jsp").forward(request, response);
+                    List<VehicleDTO> vehicle = vlogic.getAllVehicles();
+                    request.setAttribute("vehicles", vehicle);
+                    request.getRequestDispatcher("/views/admin/Vehicle.jsp").forward(request, response);
                     break;
                 case "component":
                     //getAllComponents, list, add, delete, update

@@ -1,38 +1,105 @@
-/* File: DataSource.java
- * Author: Shan Cai
- * Date: 2025/7/29
- * Description: base builder
- */
 package business.builder;
+import java.math.BigDecimal;
+import model.VehicleDTO;
 
 /**
  * This is the base of builder
  * @author shano
  */
 public class Car {
-    
-    /**This is the component of a car*/
-    private String carBreak;
-    /**This is the component of a car*/
-    private String engine;
 
+    private VehicleDTO vehicle;
+    private String vehicleNumber;
+    private BigDecimal consumptionRate;
+    private int maxPassenger;
+    private String fuelType;
+    private int routeId;
+    private int capacity;
+    private int componentId;
+    //private int vehicleId;
     
-    /**
-     * Constructor for CarBuilder
-     * @param carBreak
-     * @param engine
-     */
-    public Car(String carBreak, String engine){
-        
-        this.carBreak= carBreak;
-        this.engine = engine;
+    public Car(String vehicleNumber, BigDecimal consumptionRate, int maxPassenger, String fuelType, int routeId, int capacity, int componentId) {
+        this.vehicleNumber = vehicleNumber;
+        this.consumptionRate = consumptionRate;
+        this.maxPassenger = maxPassenger;
+        this.fuelType = fuelType;
+        this.routeId = routeId;
+        this.capacity = capacity;
+        this.componentId = componentId;
+        this.vehicle = new VehicleDTO(); 
     }
-    
-    /**
-     * Factory method to create CarBuilder;
-     * @return CarBuilder object of CarBuilder;
-     */
-    public static CarBuilder builder(){
+
+    /*
+    public int getVehicleId() {
+        return vehicleId;
+    }
+    */
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public BigDecimal getConsumptionRate() {
+        return consumptionRate;
+    }
+
+    public int getMaxPassenger() {
+        return maxPassenger;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public int getRouteId() {
+        return routeId;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getComponentId() {
+        return componentId;
+    }
+    /*
+    public void setVehicleId(int vehicleId) {
+
+        this.vehicleId = vehicle.getVehicleId();
+    }
+    */
+    public void setVehicleNumber() {
+        this.vehicleNumber = vehicle.getVehicleNumber();
+    }
+
+    public void setConsumptionRate() {
+        this.consumptionRate = vehicle.getConsumptionRate();
+    }
+
+    public void setMaxPassenger() {
+        this.maxPassenger = vehicle.getMaxPassenger();
+    }
+
+    public void setFuelType() {
+        this.fuelType = vehicle.getFuelType();
+    }
+
+    public void setRouteId() {
+        this.routeId = vehicle.getRouteId();
+    }
+
+    public void setCapacity() {
+        this.capacity = vehicle.getCapacity();
+    }
+
+    public void setComponentId() {
+        this.componentId = vehicle.getComponentId();
+    }
+
+    public void setVehicle(VehicleDTO vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public CarBuilder build() {
         return new CarBuilder();
     }
 }
