@@ -156,7 +156,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
      */
     @Override
     public boolean update(RouteDTO obj) {
-        Connection con;
+        Connection con = null;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
@@ -168,9 +168,9 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
             pstmt.setInt(3, obj.getRouteId());
 
             int rows = pstmt.executeUpdate();
-            if (rows == 0) {
-                ret = false;
-            }
+            //if (rows == 0) {
+            //    ret = false;
+           // }
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -180,9 +180,9 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
                     pstmt.close();
                 }
 
-                //if (con != null) {
-                //    con.close();
-                //}
+                if (con != null) {
+                   con.close();
+                }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
