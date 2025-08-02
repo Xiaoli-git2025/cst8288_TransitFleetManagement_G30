@@ -82,8 +82,9 @@ public class VehicleComponentControl extends HttpServlet {
     private void addComponent(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         VehicleComponentDTO component = new VehicleComponentDTO();
-        //component.setComponentId(Integer.parseInt(request.getParameter("Component_id")));
-        component.setComponentName(request.getParameter("Component_name"));
+        component.setComponentId(Integer.parseInt(request.getParameter("component_id")));
+        component.setComponentName(request.getParameter("component_name"));
+        component.setVehicleId(Integer.parseInt(request.getParameter("vehicle_id")));
         component.setUsedHour(Integer.parseInt(request.getParameter("used_hour")));
         component.setThresholdHour(Integer.parseInt(request.getParameter("threshold_hour")));
 
@@ -99,8 +100,9 @@ public class VehicleComponentControl extends HttpServlet {
     private void updateComponent(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         VehicleComponentDTO component = new VehicleComponentDTO();
-        component.setComponentId(Integer.parseInt(request.getParameter("Component_id")));
-        component.setComponentName(request.getParameter("Component_name"));
+        component.setComponentId(Integer.parseInt(request.getParameter("component_id")));
+        component.setComponentName(request.getParameter("component_name"));
+        component.setVehicleId(Integer.parseInt(request.getParameter("vehicle_id")));
         component.setUsedHour(Integer.parseInt(request.getParameter("used_hour")));
         component.setThresholdHour(Integer.parseInt(request.getParameter("threshold_hour")));
 

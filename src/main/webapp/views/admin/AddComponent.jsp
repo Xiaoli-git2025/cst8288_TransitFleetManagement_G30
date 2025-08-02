@@ -54,12 +54,16 @@
             
             <table>
                 <tr>
+                    <td>Component ID:</td>
+                    <td><input type="text" name="component_id" required></td>
+                </tr>
+                <tr>
                     <td>Component Name:</td>
-                    <td><input type="text" name="Component_name" required></td>
+                    <td><input type="text" name="component_name" required></td>
                 </tr>
                 <tr>
                     <td>Vehicle ID:</td>
-                    <td><input type="number" name="Vehicle_id" required></td>
+                    <td><input type="number" name="vehicle_id" required></td>
                 </tr>
                 <tr>
                     <td>Used Hour:</td>
