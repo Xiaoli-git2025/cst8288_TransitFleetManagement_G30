@@ -44,7 +44,7 @@
                         <span class="menu-title">Information Check</span>
                         <ul class="submenu">
                             <li><a href="${pageContext.request.contextPath}/Operator?get=vehicle_alert">Vehicle Alert</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=maintance_schedule">Maintenance Schedule</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Operator?get=maintenance_schedule">Maintenance Schedule</a></li>
                             <li><a href="${pageContext.request.contextPath}/Operator?get=operator_performance">Individual Performance</a></li>
                         </ul>
                     </li>
