@@ -81,7 +81,6 @@
                             <th>Fuel Type</th>
                             <th>Route ID</th>
                             <th>Capacity</th>
-                            <th>Component ID</th>
                             <th>Actions</th>
                         </tr>
                         <%
@@ -95,7 +94,6 @@
                             <td><%= vehicle.getFuelType()%></td>
                             <td><%= vehicle.getRouteId()%></td>
                             <td><%= vehicle.getCapacity()%></td>
-                            <td><%= vehicle.getComponentId()%></td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/views/admin/EditVehicle.jsp"
                                    class="btn btn-sm btn-primary">Edit</a>

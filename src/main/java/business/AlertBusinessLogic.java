@@ -76,7 +76,7 @@ public class AlertBusinessLogic {
             int vehicleId = componentDao.getById(componentId).getVehicleId();
 
             if (vehicleId != v_id || alert.getReporterId() != u_id) {
-                iterator.remove();  // ✅ safe removal
+                iterator.remove();  
             }
         }
         all.sort(Comparator.comparing(MaintenanceAlertDTO::getMaintenanceId));

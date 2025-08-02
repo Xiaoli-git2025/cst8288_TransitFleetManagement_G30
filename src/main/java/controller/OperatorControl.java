@@ -56,7 +56,7 @@ public class OperatorControl extends HttpServlet {
             switch (get) {
                 case "stop_time":
                     //getCurrentDateStationTime, list, add, delete, update
-                    request.getRequestDispatcher("/views/operator/StationView.jsp").forward(request, response);
+                    request.getRequestDispatcher("/views/operator/LogStationTime.jsp").forward(request, response);
                     break;
                 case "fuel_consumption":
                     //getFuelConsumption, list, add, delete, update 

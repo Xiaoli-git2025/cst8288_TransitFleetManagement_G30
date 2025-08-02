@@ -123,6 +123,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new RouteDTO();
+                obj.setRouteId(objId);
                 obj.setRouteNumber(rs.getInt("route_number"));
                 obj.setDescription(rs.getString("description"));   
 
