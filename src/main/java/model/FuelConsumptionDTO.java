@@ -20,6 +20,8 @@ public class FuelConsumptionDTO {
 
     // Unit price of the fuel (e.g., per liter or gallon)
     private java.math.BigDecimal unitPrice;
+    
+    private java.math.BigDecimal cost;
 
     // Constructors
     public FuelConsumptionDTO() {}
@@ -33,6 +35,14 @@ public class FuelConsumptionDTO {
         this.unitPrice = unitPrice;
     }
 
+    public java.math.BigDecimal getCost(){
+        return cost;
+    }
+    
+    public void setCost(java.math.BigDecimal cost){
+        this.cost = cost;
+    }
+    
     // Getters and Setters
     public int getFcId() {
         return fcId;

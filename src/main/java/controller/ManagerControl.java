@@ -14,7 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import business.*;
+import dao.*;
 import model.*;
+import business.FuelCostStrategy.*;
 import java.util.List;
 
 /**
@@ -28,12 +30,14 @@ public class ManagerControl extends HttpServlet {
      * business logic instance
      */
     private AlertBusinessLogic logic;
+    private FuelConsumptionDAO fuelDao;
     /**
      * init method
      */
     @Override
     public void init() {
         logic = new AlertBusinessLogic();
+        fuelDao = new FuelConsumptionDAO();
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -80,6 +84,13 @@ public class ManagerControl extends HttpServlet {
                     break;
                 case "fuel_energy_cost":
                     //getAllCostOnFuelEnergy, list, group by vehicle type, vehicle
+                    List<FuelConsumptionDTO> fuelData = fuelDao.getAll();
+                    for (FuelConsumptionDTO fc : fuelData) {
+                        FuelCostStrategy strategy = FuelCostStrategyFactory.getStrategyByVehicleId(fc.getVehicleId());
+                        java.math.BigDecimal cost = strategy.calculateCost(fc.getUnitPrice(), fc.getMilesTraveled());
+                        fc.setCost(cost);
+                    }
+                    request.setAttribute("fuel_consumption", fuelData);
                     request.getRequestDispatcher("/views/manager/AllCostOnFuelEnergyView.jsp").forward(request, response);
                     break;
                 default:
