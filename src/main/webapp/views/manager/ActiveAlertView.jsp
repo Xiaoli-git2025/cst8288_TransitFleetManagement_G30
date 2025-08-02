@@ -91,8 +91,8 @@
                                     <td><input type="checkbox" disabled <%= alert.isResolved() ? "checked" : "" %> /></td>
                                     <td>
                                         <a href="<%= request.getContextPath()%>/ActiveMaintenanceAlert?alert_id=<%= alert.getMaintenanceId()%>&get=add_sechedule"
-                                           class="btn btn-sm btn-primary">Add Maintenance Schedule</a>
-                                        <a href="<%= request.getContextPath()%>/AvtiveMaintenanceAlert?alert_id=<%= alert.getMaintenanceId()%>&get=delete_alert"
+                                           class="btn btn-sm btn-primary">Add/Edit Maintenance Schedule</a>
+                                        <a href="<%= request.getContextPath()%>/ActiveMaintenanceAlert?alert_id=<%= alert.getMaintenanceId()%>&get=delete_alert"
                                            class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to delete this alert?');">Delete</a>
                                     </td>
                                 </tr>

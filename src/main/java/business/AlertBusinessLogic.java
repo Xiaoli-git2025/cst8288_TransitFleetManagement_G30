@@ -7,6 +7,7 @@ import dao.*;
 import model.*;
 
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -54,6 +55,7 @@ public class AlertBusinessLogic {
                 iterator.remove();
             }
         }
+        all.sort(Comparator.comparing(VehicleDTO::getVehicleId));
         return all;
     }
     
@@ -77,6 +79,23 @@ public class AlertBusinessLogic {
                 iterator.remove();  // ✅ safe removal
             }
         }
+        all.sort(Comparator.comparing(MaintenanceAlertDTO::getMaintenanceId));
+        return all;
+    }
+    
+    public List<MaintenanceAlertDTO> getActiveMaintAlertByUserId_VehicleId(int v_id, int u_id) throws SQLException {
+        List<MaintenanceAlertDTO> all =  maintAlertDao.getAll();
+        Iterator<MaintenanceAlertDTO> iterator = all.iterator();
+        while (iterator.hasNext()) {
+            MaintenanceAlertDTO alert = iterator.next();
+            int componentId = alert.getComponentId();
+            int vehicleId = componentDao.getById(componentId).getVehicleId();
+
+            if (vehicleId != v_id || alert.getReporterId() != u_id || alert.isResolved()) {
+                iterator.remove();
+            }
+        }
+        all.sort(Comparator.comparing(MaintenanceAlertDTO::getMaintenanceId));
         return all;
     }
     
@@ -102,6 +121,7 @@ public class AlertBusinessLogic {
                 iterator.remove();
             }
         }
+        all.sort(Comparator.comparing(VehicleComponentDTO::getComponentId));
         return all;
     }
     
@@ -135,6 +155,7 @@ public class AlertBusinessLogic {
                 iterator.remove(); 
             }
         }
+        all.sort(Comparator.comparing(MaintenanceAlertDTO::getMaintenanceId));
         return all;
     }
     
@@ -152,6 +173,31 @@ public class AlertBusinessLogic {
                 iterator.remove(); 
             }
         }
+        all.sort(Comparator.comparing(MaintenanceScheduleDTO::getScheduleId));
         return all;
+    }
+    
+    public MaintenanceScheduleDTO getMaintScheduleByScheduleId(int shcedule_id){
+        return scheduleDao.getById(shcedule_id);
+    }
+    
+    public boolean updateMaintSchedule(MaintenanceScheduleDTO schedule){
+        return scheduleDao.update(schedule);
+    }
+    
+    public boolean deleteScheduleById(int schedule_id){
+        return scheduleDao.delete(schedule_id);
+    }
+    
+    public MaintenanceScheduleDTO getActiveScheduleByAlertId(int alert_id){
+        MaintenanceScheduleDTO schedule =  scheduleDao.getByAlertId(alert_id);
+        if(schedule != null){
+            if(schedule.isCompleted())
+                return null;
+            else
+                return schedule;
+        }
+        else
+            return null;
     }
 }

@@ -20,7 +20,7 @@ public class CreateMaintScheduleCommand implements Command {
     }
 
     @Override
-    public void execute() {
-        dao.add(schedule);
+    public boolean execute() {
+        return dao.add(schedule);
     }
 }

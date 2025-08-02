@@ -62,7 +62,9 @@ public class ManagerControl extends HttpServlet {
                     break;
                 case "maintenance_schedule":
                     //getActiveMaintenanceSchedule, list, add, delete, update
-                    request.getRequestDispatcher("/views/manager/ActiveMaintScheduleView.jsp").forward(request, response);
+                    List<MaintenanceScheduleDTO> schedules = logic.getActiveSchedules();
+                    request.setAttribute("schedules", schedules);
+                    request.getRequestDispatcher("/views/manager/MaintenanceScheduleView.jsp").forward(request, response);
                     break;
                 case "operator_performance":
                     //getPerformance, list, sort, filtereByOperatorName

@@ -91,9 +91,9 @@
                                     <td><%= schedule.getMaintenanceCost()%></td>
                                     <td><input type="checkbox" disabled <%= schedule.isCompleted()? "checked" : "" %> /></td>
                                     <td>
-                                        <a href="<%= request.getContextPath()%>/ActiveMaintenanceAlert?schedule_id=<%= schedule.getScheduleId()%>&get=complete_schedule"
-                                           class="btn btn-sm btn-primary">Complete Schedule</a>
-                                        <a href="<%= request.getContextPath()%>/AvtiveMaintenanceAlert?schedule_id=<%= schedule.getScheduleId()%>&get=delete_schedule"
+                                        <a href="<%= request.getContextPath()%>/ActiveMaintenanceAlert?schedule_id=<%= schedule.getScheduleId()%>&get=update_schedule"
+                                           class="btn btn-sm btn-primary">Update Schedule</a>
+                                        <a href="<%= request.getContextPath()%>/ActiveMaintenanceAlert?schedule_id=<%= schedule.getScheduleId()%>&get=delete_schedule"
                                            class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to delete this schedule?');">Delete</a>
                                     </td>
                                 </tr>
