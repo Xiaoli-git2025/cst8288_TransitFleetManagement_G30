@@ -1,30 +1,29 @@
 <%-- 
-    Document   : OperatorAlertUpdateView
-    Created on : Jul 29, 2025, 11:04:52 AM
-    Author     : Administrator
+    Document   : MaintenanceScheduleView
+    Created on : Aug 1, 2025, 4:02:52 p.m.
+    Author     : shano
 --%>
-<%@page import="model.MaintenanceAlertDTO" %>
-<%@page import="model.VehicleComponentDTO" %>
-<%@page import="model.AlertDTO" %>
+
+<%@page import="business.MaintenanceScheduleBusinessLogic"%>
 <%@page import="java.util.List" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.MaintenanceScheduleDTO" %>
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<VehicleComponentDTO> components = (List<VehicleComponentDTO>) request.getAttribute("components");
-    List<AlertDTO> alert_types = (List<AlertDTO>) request.getAttribute("alert_types");
-    String cur_vehicle = (String)request.getAttribute("cur_vehicle");
+    List<MaintenanceScheduleDTO> schedules = (List<MaintenanceScheduleDTO>) request.getAttribute("schedules");
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <title>Transit Fleet Management System - Maintenance Alert Update</title>
+        <title>Transit Fleet Management System - Maintenance Schedule</title>
     </head>
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Operator - Log Alert</h1>
+            <h1>Operator - Information Check</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>
@@ -62,29 +61,41 @@
             <!-- Main container -->
             <div class="container">
                 <div class="box_with_menu">
-                    <form action="${pageContext.request.contextPath}/MaintenanceAlert" method="post">
-                        <label>Vehicle: <%= cur_vehicle %></label>
-                        <label for="component_id">Component</label>
-                        <select name="component_id">
-                            <% for (VehicleComponentDTO component : components) {%>
-                                <option value="<%= component.getComponentId()%>"><%= component.getComponentName()%></option>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Schedule ID</th>
+                                <th>Maintenance ID</th>
+                                <th>Schedule Date</th>
+                                <th>Note</th>
+                                <th>Maintenance Cost</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (MaintenanceScheduleDTO schedule : schedules) {%>
+                            <tr>
+                                <td><%= schedule.getScheduleId()%></td>
+                                <td><%= schedule.getMaintenanceId()%></td>
+                                <td><%= schedule.getScheduleDate()%></td>
+                                <td><%= schedule.getNote()%></td>
+                                <td><%= schedule.getMaintenanceCost()%></td>
+
+                            </tr>
                             <% }%>
-                        </select>
-                        <label for="alert_type">ALert Type</label>
-                        <select name="alert_type">
-                            <% for (AlertDTO alert_type : alert_types) {%>
-                                <option value="<%= alert_type.getAlertId()%>"><%= alert_type.getAlertType()%></option>
-                            <% }%>
-                        </select>
-                        <label for="selectedDate">Alert Date:</label>
-                        <input type="date" id="selectedDate" name="alert_date" value="<%= java.time.LocalDate.now().toString() %>"
-                        
-                        <label for="action"></label>
-                        <input type="submit" name="action" class="submit-btn" value="Add Alert">
-                    </form>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Contact us at: tfms@algonquinlive.com | Phone: (123) 456-7890 | 
+                <a href="linkedin.html">LinkedIn</a>
+            </p>
+        </div>
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const menuItems = document.querySelectorAll(".menu-item .menu-title");

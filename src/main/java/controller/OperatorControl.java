@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import business.*;
+import java.util.ArrayList;
 import model.*;
 
 /**
@@ -28,13 +29,16 @@ public class OperatorControl extends HttpServlet {
      * business logic instance
      */
     private AlertBusinessLogic logic;
+    private MaintenanceScheduleBusinessLogic msblogic;
     /**
      * init method
      */
     @Override
     public void init() {
         logic = new AlertBusinessLogic();
+        msblogic = new MaintenanceScheduleBusinessLogic();
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -49,8 +53,8 @@ public class OperatorControl extends HttpServlet {
             throws ServletException, IOException {
         try {
             String get = request.getParameter("get");
-            int user_id = (Integer)request.getSession().getAttribute("user_id");
-            switch(get) {
+            int user_id = (Integer) request.getSession().getAttribute("user_id");
+            switch (get) {
                 case "stop_time":
                     //getCurrentDateStationTime, list, add, delete, update
                     request.getRequestDispatcher("/views/operator/StationView.jsp").forward(request, response);
@@ -69,9 +73,18 @@ public class OperatorControl extends HttpServlet {
                     //getSelectedVehicleAlert, list, can sort resolved and alert date
                     request.getRequestDispatcher("/views/operator/VehicleAlertView.jsp").forward(request, response);
                     break;
-                case "maintance_schedule":
-                    //getSelectedVehicleMaintenanceRecord, list, sort
-                    request.getRequestDispatcher("/views/operator/ComponentView.jsp").forward(request, response);
+                case "maintenance_schedule":
+                    List<MaintenanceScheduleDTO> allSchedules = msblogic.getAllObjects();
+                    /*
+                    if (allSchedules == null) {
+                        allSchedules = new ArrayList<>();
+                        Logger.getLogger(MaintenanceScheduleControl.class.getName())
+                                .log(Level.WARNING, "return null");
+                    }
+                    */
+                    request.setAttribute("schedules", allSchedules);
+                    request.setAttribute("msg", request.getParameter("msg"));
+                    request.getRequestDispatcher("/views/operator/InformationCheck/MaintenanceSchedule/MaintenanceScheduleView.jsp").forward(request, response);
                     break;
                 case "operator_performance":
                     //getCurrentOperatorPerformance
@@ -81,7 +94,7 @@ public class OperatorControl extends HttpServlet {
                     break;
             }
         } catch (Exception ex) {
-            Logger.getLogger(AdminControl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OperatorControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
