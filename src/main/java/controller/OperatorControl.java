@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import java.io.IOException;
@@ -10,11 +6,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import business.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import model.*;
 
@@ -30,6 +26,8 @@ public class OperatorControl extends HttpServlet {
      */
     private AlertBusinessLogic logic;
     private MaintenanceScheduleBusinessLogic msblogic;
+    private VehicleAlertBusinessLogic vablogic;
+
     /**
      * init method
      */
@@ -37,6 +35,7 @@ public class OperatorControl extends HttpServlet {
     public void init() {
         logic = new AlertBusinessLogic();
         msblogic = new MaintenanceScheduleBusinessLogic();
+        vablogic = new VehicleAlertBusinessLogic();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,9 +69,14 @@ public class OperatorControl extends HttpServlet {
                     request.getRequestDispatcher("/views/operator/OperatorAlertView.jsp").forward(request, response);
                     break;
                 case "vehicle_alert":
-                    //getSelectedVehicleAlert, list, can sort resolved and alert date
-                    request.getRequestDispatcher("/views/operator/VehicleAlertView.jsp").forward(request, response);
-                    break;
+                    try {
+                        int userId = (Integer) request.getSession().getAttribute("user_id");
+                        List<VehicleAlertDTO> alerts = vablogic.getObjById(userId);
+                        request.setAttribute("alerts", alerts);
+                        request.getRequestDispatcher("/views/operator/InformationCheck/VehicleAlert/VehicleAlertView.jsp").forward(request, response);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(VehicleAlertControl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 case "maintenance_schedule":
                     List<MaintenanceScheduleDTO> allSchedules = msblogic.getAllObjects();
                     /*
@@ -81,7 +85,7 @@ public class OperatorControl extends HttpServlet {
                         Logger.getLogger(MaintenanceScheduleControl.class.getName())
                                 .log(Level.WARNING, "return null");
                     }
-                    */
+                     */
                     request.setAttribute("schedules", allSchedules);
                     request.setAttribute("msg", request.getParameter("msg"));
                     request.getRequestDispatcher("/views/operator/InformationCheck/MaintenanceSchedule/MaintenanceScheduleView.jsp").forward(request, response);
@@ -94,7 +98,7 @@ public class OperatorControl extends HttpServlet {
                     break;
             }
         } catch (Exception ex) {
-            Logger.getLogger(OperatorControl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VehicleAlertControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

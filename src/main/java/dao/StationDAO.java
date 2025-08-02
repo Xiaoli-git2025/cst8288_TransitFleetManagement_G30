@@ -148,7 +148,7 @@ public class StationDAO implements DAOInterface<StationDTO>{
     
     /**
      * update object
-     * @param object updated object
+     * @param obj updated object
      * @return true for success, false for fail
      */
     @Override
@@ -162,8 +162,7 @@ public class StationDAO implements DAOInterface<StationDTO>{
                     "UPDATE station SET station_name = ? WHERE station_id = ?");
             
             pstmt.setInt(2, obj.getStationId());
-            pstmt.setString(1, obj.getStationName());  
-            
+            pstmt.setString(1, obj.getStationName()); 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -176,10 +175,6 @@ public class StationDAO implements DAOInterface<StationDTO>{
                 if (pstmt != null) {
                     pstmt.close();
                 }
-
-                //if (con != null) {
-                //    con.close();
-                //}
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }

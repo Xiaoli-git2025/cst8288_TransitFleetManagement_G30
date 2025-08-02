@@ -1,6 +1,5 @@
 package controller;
 
-import business.RouteBusinessLogic;
 import business.StationBusinessLogic;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.RouteDTO;
 import model.StationDTO;
 
 @WebServlet(name = "StationControl", urlPatterns = {"/StationControl"})
@@ -109,7 +107,7 @@ public class StationControl extends HttpServlet {
         if (success) {
             getAllStations(request,response);       
         } else {
-            request.setAttribute("error", "Failed to add route");
+            request.setAttribute("error", "Failed to edit route");
             request.getRequestDispatcher("/views/admin/UpdateStation.jsp").forward(request, response);
         }
     }
