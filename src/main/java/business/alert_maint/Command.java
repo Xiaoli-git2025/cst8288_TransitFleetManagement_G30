@@ -10,5 +10,5 @@ package business.alert_maint;
  */
 
 public interface Command {
-    void execute();
+    boolean execute();
 }

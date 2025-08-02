@@ -26,8 +26,7 @@ public class VehicleDTO {
 
     // Total capacity of the vehicle (could represent seats or weight limit)
     private int capacity;
-
-
+    
     // Constructors
     public VehicleDTO() {}
 
@@ -40,7 +39,6 @@ public class VehicleDTO {
         this.fuelType = fuelType;
         this.routeId = routeId;
         this.capacity = capacity;
-
     }
 
     // Getters and Setters
@@ -99,6 +97,5 @@ public class VehicleDTO {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
 
-    }
-    
+    }   
 }

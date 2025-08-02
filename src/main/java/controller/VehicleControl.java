@@ -102,7 +102,6 @@ public class VehicleControl extends HttpServlet {
             vehicle.setFuelType(getRequiredParameter(request, "fuel_type"));
             vehicle.setRouteId(getIntParameter(request, "route_id"));
             vehicle.setCapacity(getIntParameter(request, "capacity"));
-
             if (!vehicleDAO.update(vehicle)) {
                 throw new ServletException("Failed to update vehicle");
             }

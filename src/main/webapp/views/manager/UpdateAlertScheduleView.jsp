@@ -1,33 +1,25 @@
-<%@page import="model.AlertDTO"%>
-<%@page import="business.AlertTypeBusinessLogic"%>
+<%-- 
+    Document   : OperatorAlertUpdateView
+    Created on : Jul 29, 2025, 11:04:52 AM
+    Author     : Administrator
+--%>
+<%@page import="model.MaintenanceScheduleDTO" %>
+<%@page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.io.*" %>
+<%MaintenanceScheduleDTO cur_schedule = (MaintenanceScheduleDTO) request.getAttribute("cur_schedule");%>
 
-<%
-    String idParam = request.getParameter("id");
-    AlertDTO alert = null;
-    request.setAttribute("alert", alert);
-
-    try {
-        int alertId = Integer.parseInt(idParam);
-        AlertTypeBusinessLogic logic = new AlertTypeBusinessLogic();
-        alert = logic.getAlertById(alertId); // You need to implement this method
-    } catch (Exception e) {
-        out.println("<p style='color:red;'>Error loading alert: " + e.getMessage() + "</p>");
-    }
-%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Edit Alert Type</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <title>Transit Fleet Management System</title>
     </head>
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Edit Alert Type</h1>
+            <h1>Manager - Maintenance Schedule</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>
@@ -45,7 +37,7 @@
                 <ul class="menu">
                     <li class="menu-item">
                         <span class="menu-title">Alert Management</span>
-                        <ul class="submenu show">
+                        <ul class="submenu">
                             <li><a href="${pageContext.request.contextPath}/Manager?get=alert_type">Alert Type</a></li>
                             <li><a href="${pageContext.request.contextPath}/Manager?get=all_alerts">Check Alert</a></li>
                             <li><a href="${pageContext.request.contextPath}/Manager?get=maintenance_schedule">Maintenance Schedule</a></li>
@@ -64,37 +56,28 @@
             </nav>
 
             <!-- Main container -->
-
             <div class="container">
-                <div class="box">
-                    <form method="post" action="${pageContext.request.contextPath}/EditAlertType">
-
-                        <h2 style="margin-bottom: 1rem; color: #003366;">Edit Alert Type</h2>
-                        <input type="hidden" name="alert_id" value="<%= alert.getAlertId()%>" />
-                        <label for="alertType">Alert Type</label>
-                        <input type="text" id="alertType" name="alert_type" value="<%= alert.getAlertType()%>" required />
-
-                        <label for="alertDescription">Alert Description</label>
-                        <input type="text" id="alertDescription" name="alert_description" value="<%= alert.getAlertDescription()%>" required />
-
-
-
-                        <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                            <button type="submit" class="submit-btn">Update</button>
-                            <a href="${pageContext.request.contextPath}/Manager?get=alert_type" class="submit-btn" style="text-align: center; line-height: 1rem; text-decoration: none;">Cancel</a>
-                        </div>
+                <div class="box_with_menu">
+                    <form action="${pageContext.request.contextPath}/ActiveMaintenanceAlert" method="post">
+                        <label for="schedule_id">Schedule ID</label>
+                        <input type="text" id="schedule_id" readonly name="schedule_id" value="<%= cur_schedule.getScheduleId()%>" readonly>
+                        <label for="malert_id">Alert ID</label>
+                        <input type="text" id="malert_id" name="malert_id" readonly value="<%= cur_schedule.getMaintenanceId() %>" readonly>
+                        <label for="selectedDate">Schedule Date:</label>
+                        <input type="date" id="selectedDate" name="schedule_date" value="<%= cur_schedule.getScheduleDate() %>">
+                        <label for="maint_cost">Maintenance Cost:</label>
+                        <input type="text" id="maint_cost" name="maint_cost" value="<%= cur_schedule.getMaintenanceCost() %>">
+                        <label for="note">Note:</label>
+                        <textarea id="note" name="note" rows="4" cols="50"><%= cur_schedule.getNote() %></textarea>
+                        <label for="complete">Completed?</label>
+                        <input type="checkbox" name="complete" id="complete"
+                            <%= cur_schedule.isCompleted() ? "checked" : "" %> />
+                        <label for="action"></label>
+                        <input type="submit" name="action" class="submit-btn" value="Update Schedule">
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <p>Contact us at: tfms@algonquinlive.com | Phone: (123) 456-7890 | 
-                <a href="linkedin.html" style="color: white; text-decoration: underline;">LinkedIn</a>
-            </p>
-        </div>
-
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const menuItems = document.querySelectorAll(".menu-item .menu-title");
@@ -109,9 +92,3 @@
         </script>
     </body>
 </html>
-
-
-
-
-
-
