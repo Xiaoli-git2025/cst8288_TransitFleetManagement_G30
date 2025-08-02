@@ -65,6 +65,52 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
         }
         return objs;
     }
+    
+    public List<RouteScheduleDTO> getByStationIdAndRouteId(int station_id, int route_id)throws SQLException{
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<RouteScheduleDTO> objs = null;
+        try {
+            con = DataSource.getConnection();
+            pstmt = con.prepareStatement(
+                    "SELECT * FROM routeschedule WHERE station_id = ? && route_id = ? order by schedule_number");
+            pstmt.setInt(1, station_id);
+            pstmt.setInt(2, route_id);
+            rs = pstmt.executeQuery();
+            objs = new ArrayList<RouteScheduleDTO>();
+            while (rs.next()) {
+                RouteScheduleDTO obj = new RouteScheduleDTO();
+                obj.setScheduleId(rs.getInt("schedule_id"));
+                obj.setRouteId(rs.getInt("route_id"));
+                obj.setStationId(rs.getInt("station_id"));
+                obj.setScheduleNumber(rs.getInt("schedule_number"));
+                obj.setScheduleArriveTime(rs.getTime("schedule_arrive_time"));
+                obj.setScheduleDepartTime(rs.getTime("schedule_depart_time"));
+                objs.add(obj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return objs;
+    }
 
     /**
      * add object
