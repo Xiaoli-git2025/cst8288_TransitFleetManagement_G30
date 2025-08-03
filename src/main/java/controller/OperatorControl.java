@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import business.*;
+import dao.OperatorPerformanceDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.*;
@@ -92,6 +93,10 @@ public class OperatorControl extends HttpServlet {
                     break;
                 case "operator_performance":
                     //getCurrentOperatorPerformance
+                    int userId = (Integer) request.getSession().getAttribute("user_id");
+                    OperatorPerformanceDAO opDAO = new OperatorPerformanceDAO();
+                    List<OperatorPerformanceDTO> logs = opDAO.getPerformanceByUserId(userId);
+                    request.setAttribute("logs", logs);
                     request.getRequestDispatcher("/views/operator/OperatorPerformanceView.jsp").forward(request, response);
                     break;
                 default:
