@@ -5,8 +5,8 @@
 package business.alert_maint;
 
 /**
- *
- * @author Administrator
+ * Command interface
+ * @author Xiaoli He
  */
 
 public interface Command {

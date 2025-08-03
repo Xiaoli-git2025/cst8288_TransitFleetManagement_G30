@@ -20,7 +20,7 @@ import model.*;
 import java.util.List;
 
 /**
- *
+ * Servlet controller for Login and register
  * @author Xiaoli He
  */
 @WebServlet(name = "MainControl", urlPatterns = {"/Login"})

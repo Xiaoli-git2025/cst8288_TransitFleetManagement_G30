@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
- *
- * @author Administrator
+ * Servlet controller for Station time control part
+ * @author Xiaoli He
  */
 @WebServlet(name = "LigStopTimeControl", urlPatterns = {"/LogStopTime"})
 public class LogStopTimeControl extends HttpServlet {

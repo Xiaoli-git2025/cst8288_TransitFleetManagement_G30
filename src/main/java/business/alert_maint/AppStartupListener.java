@@ -10,7 +10,10 @@ import jakarta.servlet.ServletContextListener;
 //import jakarta.servlet.annotation.WebListener;
 import dao.MaintenanceAlertDAO;
 
-
+/**
+ * Listener for subject
+ * @author Xiaoli He
+ */
 public class AppStartupListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {

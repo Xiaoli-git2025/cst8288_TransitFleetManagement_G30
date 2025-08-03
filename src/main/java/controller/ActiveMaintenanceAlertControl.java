@@ -21,8 +21,8 @@ import model.*;
 import dao.MaintenanceScheduleDAO;
 
 /**
- *
- * @author Administrator
+ * Servlet controller for manager edit Maintenance and schedule part
+ * @author Xiaoli He
  */
 @WebServlet(name = "ActiveMaintenanceAlertControl", urlPatterns = {"/ActiveMaintenanceAlert"})
 public class ActiveMaintenanceAlertControl extends HttpServlet {

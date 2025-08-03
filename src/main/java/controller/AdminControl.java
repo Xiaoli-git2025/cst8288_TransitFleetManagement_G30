@@ -20,8 +20,8 @@ import business.builder.VehicleBusinessLogic;
 import model.*;
 
 /**
- *
- * @author Administrator
+ * Servlet controller for Admin control
+ * @author Xiaoli He
  */
 @WebServlet(name = "AdminControl", urlPatterns = {"/Admin"})
 public class AdminControl extends HttpServlet {

@@ -6,7 +6,7 @@ package business.alert_maint;
 import model.MaintenanceScheduleDTO;
 import dao.MaintenanceScheduleDAO;
 /**
- *
+ * update schedule command
  * @author Xiaoli He
  */
 public class UpdateMaintScheduleCommand implements Command {
@@ -14,12 +14,22 @@ public class UpdateMaintScheduleCommand implements Command {
     private MaintenanceScheduleDAO dao;
     private MaintenanceSubject subject;
 
+    /**
+     * constructor
+     * @param schedule schedule object
+     * @param dao schedule dao
+     * @param subject maintenance subject
+     */
     public UpdateMaintScheduleCommand(MaintenanceScheduleDTO schedule, MaintenanceScheduleDAO dao, MaintenanceSubject subject) {
         this.schedule = schedule;
         this.dao = dao;
         this.subject = subject;
     }
 
+    /**
+     * command execute 
+     * @return if the command execute succeed
+     */
     @Override
     public boolean execute() {
         if(dao.update(schedule)){

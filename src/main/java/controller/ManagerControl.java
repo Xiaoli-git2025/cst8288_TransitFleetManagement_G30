@@ -29,8 +29,8 @@ import business.FuelCostStrategy.*;
 import java.util.List;
 
 /**
- *
- * @author Administrator
+ * Servlet controller for manager functions
+ * @author AdministXiaoli Herator
  */
 @WebServlet(name = "ManagerControl", urlPatterns = {"/Manager"})
 public class ManagerControl extends HttpServlet {
