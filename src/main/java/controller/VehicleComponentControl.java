@@ -1,7 +1,6 @@
 package controller;
 
 import business.VehicleComponentBusinessLogic;
-import static cn.jdevelops.log.LogUtils.error;
 import model.VehicleComponentDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
