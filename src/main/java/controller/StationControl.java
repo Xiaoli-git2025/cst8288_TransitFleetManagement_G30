@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.StationDTO;
+import model.VehicleComponentDTO;
 
 @WebServlet(name = "StationControl", urlPatterns = {"/StationControl"})
 public class StationControl extends HttpServlet {
@@ -59,6 +60,9 @@ public class StationControl extends HttpServlet {
             String action = request.getParameter("action");
             
             switch (action) {
+                case "EditStation":
+                    showEditForm(request, response);
+                    break;
                 case "DeleteStation":
                         deleteStation(request, response);
                         break;
@@ -87,7 +91,7 @@ public class StationControl extends HttpServlet {
     private void addStation(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         StationDTO station = new StationDTO();
-        station.setStationId(Integer.parseInt(request.getParameter("station_id")));
+        //station.setStationId(Integer.parseInt(request.getParameter("station_id")));
         station.setStationName(request.getParameter("station_name"));
         boolean success = sblogic.addObject(station);
         if (success) {
@@ -103,7 +107,7 @@ public class StationControl extends HttpServlet {
         StationDTO station = new StationDTO();
         station.setStationId(Integer.parseInt(request.getParameter("station_id")));
         station.setStationName(request.getParameter("station_name"));
-        boolean success = sblogic.addObject(station);
+        boolean success = sblogic.updateObject(station);
         if (success) {
             getAllStations(request,response);       
         } else {
@@ -122,4 +126,21 @@ public class StationControl extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        try {
+            int stationId = Integer.parseInt(request.getParameter("stationId"));
+            StationDTO station = sblogic.getObjById(stationId);
+
+            if (station == null) {
+                throw new ServletException("Component not found with ID: " + stationId);
+            }
+
+            request.setAttribute("stations", station);
+            request.getRequestDispatcher("/views/admin/EditStation.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            throw new ServletException("Invalid component ID format", e);
+        }
+    }
+
 }

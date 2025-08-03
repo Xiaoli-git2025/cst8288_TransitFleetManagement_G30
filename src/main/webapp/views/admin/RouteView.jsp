@@ -51,7 +51,6 @@
                         <ul class="submenu">
                             <li><a href="${pageContext.request.contextPath}/Admin?get=vehicle">Vehicle</a></li>
                             <li><a href="${pageContext.request.contextPath}/Admin?get=component">Vehicle Component</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Admin?get=fuel">Fuel Consumption</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -81,11 +80,11 @@
                                 <td><%= route.getRouteNumber()%></td>
                                 <td><%= route.getDescription()%></td>
                                 <td>
-                                    <a href="<%= request.getContextPath()%>/views/admin/EditRoute.jsp?id=<%= route.getRouteId()%>"
+                                    <a href="<%= request.getContextPath()%>/RouteControl?action=EditRoute&routeId=<%= route.getRouteId()%>"
                                        class="btn btn-sm btn-primary">Edit</a>
                                     <a href="<%= request.getContextPath()%>/RouteControl?action=DeleteRoute&routeId=<%= route.getRouteId()%>"
                                        class="btn btn-sm btn-danger" 
-                                       onclick="return confirm('Are you sure you want to delete this component?')">Delete</a>
+                                       onclick="return confirm('Are you sure you want to delete this Route?')">Delete</a>
                                 </td>
                             </tr>
                             <% }%>

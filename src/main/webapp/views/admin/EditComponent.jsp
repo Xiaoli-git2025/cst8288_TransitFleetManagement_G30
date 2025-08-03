@@ -55,22 +55,22 @@
         <table>
             <tr>
                 <td>Component ID:</td>
-                <td><input type="number" name="component_id" required></td>
+                <td><input type="number" name="component_id" value=${vehicleComponents.componentId} required></td>
             </tr>
             <tr>
                 <td>Component Name:</td>
-                <td><input type="text" name="component_name" required></td>
+                <td><input type="text" name="component_name" value=${vehicleComponents.componentName} required></td>
             </tr>
             <tr>
                 <td>Vehicle ID:</td>
-                <td><input type="number" name="vehicle_id" required></td>
-                <tr>
+                <td><input type="number" name="vehicle_id" value=${vehicleComponents.vehicleId} required></td>
+            <tr>
                 <td>Used Hour:</td>
-                <td><input type="number" name="used_hour" required></td>
+                <td><input type="number" name="used_hour" value=${vehicleComponents.usedHour} required></td>
             </tr>
             <tr>
                 <td>Threshold Hour:</td>
-                <td><input type="number" name="threshold_hour" required></td>
+                <td><input type="number" name="threshold_hour" value=${vehicleComponents.thresholdHour} required></td>
             </tr>
             </table>
             <button type="submit" name="action" value="UpdateComponent" class="btn btn-sm btn-primary">Edit Component</button>

@@ -53,10 +53,12 @@
                     <form action="${pageContext.request.contextPath}/RouteScheduleControl" method="post">
 
                         <table>
+                            <!--
                             <tr>
                                 <td>Schedule ID:</td>
                                 <td><input type ="number" name ="schedule_id" required></td>
                             </tr>
+                            -->
                             <tr>
                                 <td>Route ID:</td>
                                 <td><input type ="number" name ="route_id" required></td>

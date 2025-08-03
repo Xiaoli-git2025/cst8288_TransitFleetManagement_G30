@@ -69,6 +69,7 @@
                                 <th>Schedule Date</th>
                                 <th>Note</th>
                                 <th>Maintenance Cost</th>
+                                <th>Completed</th>
 
                             </tr>
                         </thead>
@@ -80,8 +81,7 @@
                                 <td><%= schedule.getScheduleDate()%></td>
                                 <td><%= schedule.getNote()%></td>
                                 <td><%= schedule.getMaintenanceCost()%></td>
-
-                            </tr>
+                                <td><%= schedule.getCompleted()%></td>
                             <% }%>
                         </tbody>
                     </table>

@@ -79,14 +79,12 @@ public class OperatorControl extends HttpServlet {
                         Logger.getLogger(VehicleAlertControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 case "maintenance_schedule":
-                    List<MaintenanceScheduleDTO> allSchedules = msblogic.getAllObjects();
-                    /*
+                    List<MaintenanceScheduleDTO> allSchedules = msblogic.getAllObjects();                    
                     if (allSchedules == null) {
                         allSchedules = new ArrayList<>();
                         Logger.getLogger(MaintenanceScheduleControl.class.getName())
                                 .log(Level.WARNING, "return null");
-                    }
-                     */
+                    }                     
                     request.setAttribute("schedules", allSchedules);
                     request.setAttribute("msg", request.getParameter("msg"));
                     request.getRequestDispatcher("/views/operator/InformationCheck/MaintenanceSchedule/MaintenanceScheduleView.jsp").forward(request, response);
@@ -103,7 +101,8 @@ public class OperatorControl extends HttpServlet {
                     break;
             }
         } catch (Exception ex) {
-            Logger.getLogger(VehicleAlertControl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OperatorControl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ServletException("Error: " + ex.getMessage(), ex);
         }
     }
 

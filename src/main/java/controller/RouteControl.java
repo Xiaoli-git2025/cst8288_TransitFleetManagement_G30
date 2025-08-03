@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.RouteDTO;
+import model.StationDTO;
 
 @WebServlet(name = "RouteControl", urlPatterns = {"/RouteControl"})
 public class RouteControl extends HttpServlet {
@@ -59,6 +60,9 @@ public class RouteControl extends HttpServlet {
             String action = request.getParameter("action");
             
             switch (action) {
+                case "EditRoute":
+                    showEditForm(request, response);
+                    break;
                 case "DeleteRoute":
                         deleteRoute(request, response);
                         break;
@@ -121,6 +125,22 @@ public class RouteControl extends HttpServlet {
             getAllRoutes(request,response);
         } else {
             request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        try {
+            int routeId = Integer.parseInt(request.getParameter("routeId"));
+            RouteDTO route = rblogic.getObjById(routeId);
+
+            if (route == null) {
+                throw new ServletException("Component not found with ID: " + routeId);
+            }
+
+            request.setAttribute("routes", route);
+            request.getRequestDispatcher("/views/admin/EditRoute.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            throw new ServletException("Invalid component ID format", e);
         }
     }
 }

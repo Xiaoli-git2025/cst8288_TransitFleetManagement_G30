@@ -79,7 +79,10 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
             
             pstmt.setInt(1, obj.getRouteNumber());
             pstmt.setString(2, obj.getDescription());   
-            pstmt.executeUpdate();
+           int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                ret = true;
+            }
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,7 +124,7 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
                     "SELECT * FROM route WHERE route_id = ?");
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 obj = new RouteDTO();
                 obj.setRouteId(objId);
                 obj.setRouteNumber(rs.getInt("route_number"));
@@ -167,11 +170,9 @@ public class RouteDAO implements DAOInterface<RouteDTO>{
             pstmt.setInt(1, obj.getRouteNumber());
             pstmt.setString(2, obj.getDescription()); 
             pstmt.setInt(3, obj.getRouteId());
-
-            int rows = pstmt.executeUpdate();
-            //if (rows == 0) {
-            //    ret = false;
-           // }
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                ret = false;}
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;

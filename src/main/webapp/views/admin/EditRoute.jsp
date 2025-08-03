@@ -55,15 +55,15 @@
                         <table>
                             <tr>
                                 <td>Route ID:</td>
-                                <td><input type ="number" name ="route_id" required></td>
+                                <td><input type ="number" name ="route_id" value="${routes.routeId}" readonly></td>
                             </tr>
                             <tr>
                                 <td>Route Number:</td>
-                                <td><input type ="number" name ="route_number" required></td>
+                                <td><input type ="number" name ="route_number"  value="${routes.routeNumber}" required></td>
                             </tr>
                             <tr>
                                 <td>Description:</td>
-                                <td><input type="text" name="description" required></td>
+                                <td><input type="text" name="description"  value="${routes.description}" required></td>
                             </tr>
                         </table>
                         <button type="submit" name="action" value="UpdateRoute" class="btn btn-sm btn-primary">Edit Route</button>

@@ -24,6 +24,7 @@
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <a href="${pageContext.request.contextPath}/Login?logout=true" class="icon-btn logout" title="Logout">
+                    <a href="EditComponent.jsp"></a>
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </div>
@@ -81,7 +82,7 @@
                             <td><%= vehicleComponent.getUsedHour()%></td>
                             <td><%= vehicleComponent.getThresholdHour()%></td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/views/admin/EditComponent.jsp"
+                                <a href="${pageContext.request.contextPath}/VehicleComponentControl?actions=EditComponent&componentId=<%= vehicleComponent.getComponentId() %>" 
                                    class="btn btn-sm btn-primary">Edit</a>
                                 <a href="${pageContext.request.contextPath}/VehicleComponentControl?actions=DeleteComponent&componentId=<%= vehicleComponent.getComponentId()%>"
                                    class="btn btn-sm btn-danger" 

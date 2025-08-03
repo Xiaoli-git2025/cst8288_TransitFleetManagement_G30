@@ -53,10 +53,12 @@
         <form action="${pageContext.request.contextPath}/VehicleComponentControl" method="post">
             
             <table>
+                <!--
                 <tr>
                     <td>Component ID:</td>
                     <td><input type="text" name="component_id" required></td>
                 </tr>
+                -->
                 <tr>
                     <td>Component Name:</td>
                     <td><input type="text" name="component_name" required></td>

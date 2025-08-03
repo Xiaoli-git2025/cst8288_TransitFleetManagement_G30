@@ -131,7 +131,10 @@ public class RouteScheduleDAO implements DAOInterface<RouteScheduleDTO>{
             pstmt.setInt(3, obj.getScheduleNumber());
             pstmt.setTime(4, obj.getScheduleArriveTime());
             pstmt.setTime(5, obj.getScheduleDepartTime());
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                ret = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;

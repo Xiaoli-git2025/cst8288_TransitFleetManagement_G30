@@ -52,7 +52,6 @@
                         <ul class="submenu">
                             <li><a href="${pageContext.request.contextPath}/Admin?get=vehicle">Vehicle</a></li>
                             <li><a href="${pageContext.request.contextPath}/Admin?get=component">Vehicle Component</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Admin?get=fuel">Fuel Consumption</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -88,7 +87,7 @@
                                 <td><%= routeSchedule.getScheduleArriveTime()%></td>
                                 <td><%= routeSchedule.getScheduleDepartTime()%></td>
                                 <td>
-                                    <a href="<%= request.getContextPath()%>/views/admin/EditSchedule.jsp?id=<%= routeSchedule.getScheduleId()%>"
+                                    <a href="<%= request.getContextPath()%>/RouteScheduleControl?action=EditSchedule&scheduleId=<%= routeSchedule.getScheduleId()%>"
                                        class="btn btn-sm btn-primary">Edit</a>
                                     <a href="<%= request.getContextPath()%>/RouteScheduleControl?action=DeleteRouteSchedule&scheduleId=<%= routeSchedule.getScheduleId()%>"
                                        class="btn btn-sm btn-danger" 

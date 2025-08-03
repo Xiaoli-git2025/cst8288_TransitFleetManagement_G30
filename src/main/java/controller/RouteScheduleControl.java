@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.RouteScheduleDTO;
+import model.StationDTO;
 
 @WebServlet(name = "RouteScheduleControl", urlPatterns = {"/RouteScheduleControl"})
 public class RouteScheduleControl extends HttpServlet {
@@ -59,6 +60,9 @@ public class RouteScheduleControl extends HttpServlet {
             String action = request.getParameter("action");
             
             switch (action) {
+                case "EditSchedule":
+                    showEditForm(request, response);
+                    break;
                 case "DeleteRouteSchedule":
                         deleteSchedule(request, response);
                         break;
@@ -89,7 +93,6 @@ public class RouteScheduleControl extends HttpServlet {
         RouteScheduleDTO schedule = new RouteScheduleDTO();
         schedule.setRouteId(Integer.parseInt(request.getParameter("route_id")));
         schedule.setStationId(Integer.parseInt(request.getParameter("station_id")));
-        schedule.setScheduleId(Integer.parseInt(request.getParameter("schedule_id")));
         schedule.setScheduleNumber(Integer.parseInt(request.getParameter("schedule_number")));
         schedule.setScheduleArriveTime(Time.valueOf(request.getParameter("schedule_arrive_time")));  
         schedule.setScheduleDepartTime(Time.valueOf(request.getParameter("schedule_depart_time")));
@@ -110,15 +113,27 @@ public class RouteScheduleControl extends HttpServlet {
         schedule.setStationId(Integer.parseInt(request.getParameter("station_id")));
         schedule.setScheduleId(Integer.parseInt(request.getParameter("schedule_id")));
         schedule.setScheduleNumber(Integer.parseInt(request.getParameter("schedule_number")));
-        schedule.setScheduleArriveTime(Time.valueOf(request.getParameter("schedule_arrive_time")));  
-        schedule.setScheduleDepartTime(Time.valueOf(request.getParameter("schedule_depart_time")));
-
-        boolean success = rsblogic.addObject(schedule);
+        String arriveTime = request.getParameter("schedule_arrive_time");
+        if(arriveTime != null && !arriveTime.isEmpty()) {
+            if(arriveTime.length() == 5) {
+                arriveTime += ":00";
+            }
+            schedule.setScheduleArriveTime(Time.valueOf(arriveTime));
+        }
+       
+        String departTime = request.getParameter("schedule_depart_time");
+        if(departTime != null && !departTime.isEmpty()) {
+            if(departTime.length() == 5) {
+                departTime += ":00";
+            schedule.setScheduleDepartTime(Time.valueOf(departTime));
+        }
+        }
+        boolean success = rsblogic.updateObject(schedule);
         if (success) {
             getAllSchedules(request,response);       
         } else {
             request.setAttribute("error", "Failed to add route");
-            request.getRequestDispatcher("/views/admin/UpdateSchedule.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/admin/EditSchedule.jsp").forward(request, response);
         }
     }
 
@@ -130,6 +145,22 @@ public class RouteScheduleControl extends HttpServlet {
             getAllSchedules(request,response);
         } else {
             request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        try {
+            int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
+            RouteScheduleDTO schedule = rsblogic.getObjById(scheduleId);
+
+            if (schedule == null) {
+                throw new ServletException("Schedule not found with ID: " + scheduleId);
+            }
+
+            request.setAttribute("schedule", schedule);
+            request.getRequestDispatcher("/views/admin/EditSchedule.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            throw new ServletException("Invalid component ID format", e);
         }
     }
 }
