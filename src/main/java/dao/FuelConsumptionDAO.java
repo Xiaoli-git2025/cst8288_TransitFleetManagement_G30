@@ -35,6 +35,7 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
             objs = new ArrayList<FuelConsumptionDTO>();
             while (rs.next()) {
                 FuelConsumptionDTO obj = new FuelConsumptionDTO();
+                obj.setFcId(rs.getInt("fc_id"));
                 obj.setVehicleId(rs.getInt("vehicle_id"));
                 obj.setDate(rs.getDate("date"));
                 obj.setMilesTraveled(rs.getBigDecimal("miles_traveled"));
@@ -83,7 +84,7 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
             pstmt.setDate(2, obj.getDate());
             pstmt.setBigDecimal(3, obj.getMilesTraveled());
             pstmt.setBigDecimal(4, obj.getUnitPrice());
-             
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -125,15 +126,12 @@ public class FuelConsumptionDAO implements DAOInterface<FuelConsumptionDTO>{
             pstmt.setInt(1, objId);
             rs = pstmt.executeQuery();
             while (rs.next()) {
+                obj = new FuelConsumptionDTO();
+                obj.setFcId(objId);
                 obj.setVehicleId(rs.getInt("vehicle_id"));
                 obj.setDate(rs.getDate("date"));
                 obj.setMilesTraveled(rs.getBigDecimal("miles_traveled"));
                 obj.setUnitPrice(rs.getBigDecimal("unit_price"));
-                
-                obj = new FuelConsumptionDTO();
-                
-                
-                
             }
         } catch (SQLException e) {
             e.printStackTrace();

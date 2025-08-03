@@ -4,14 +4,13 @@
     Author     : Administrator
 --%>
 <%@page import="model.*" %>
-<%@page import="business.*" %>
+<%@page import="dao.*" %>
+<%@page import="business.FuelConsumptionBusinessLogic" %>
 <%@page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    StopTimeBusinessLogic logic = new StopTimeBusinessLogic();
-    int user_id = (Integer)request.getSession().getAttribute("user_id");
-    RouteDTO route = logic.getRouteByUserId(user_id);
-    List<StationDTO> stations = logic.getStationsbyRouteId(route.getRouteId());
+    List<VehicleDTO> vehicles = (List<VehicleDTO>) request.getAttribute("vehicles");
+    //int vehicle_id = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -19,12 +18,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <title>Transit Fleet Management System - Log Stop Time</title>
+        <title>Transit Fleet Management System - Log Fuel Consumption</title>
     </head>
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Operator - Log Stop Time</h1>
+            <h1>Operator - Log Fuel Consumption</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>
@@ -62,52 +61,52 @@
             <!-- Main container -->
             <div class="container">
                 <div class="box_with_menu">
-                    <form method="post" action="${pageContext.request.contextPath}/LogStopTime">
+                    <form method="post" action="${pageContext.request.contextPath}/FuelConsumption">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <label for="station_id">Select Station</label>
-                            <select id="station_id" name="station_id">
-                                 <% for (StationDTO station : stations) {
+                            <label for="vehicle_id">Select Vehicle</label>
+                            <select id="vehicle_id" name="vehicle_id">
+                                 <% for (VehicleDTO vehicle : vehicles) {
                                  %>
-                                    <option value="<%= station.getStationId() %>"><%= station.getStationName()%></option>
+                                    <option value="<%= vehicle.getVehicleId()%>"><%= vehicle.getVehicleNumber()%></option>
                                  <% } %>
                             </select>
-                            <input type="submit" name="action" class="submit-btn" value="Load Route Schedule" />
+                            <input type="submit" name="action" class="submit-btn" value="Load Fuel Consumption" />
                         </div>
 
                         <%
-                            List<RouteScheduleDTO> schedules = (List<RouteScheduleDTO>) request.getAttribute("route_schedules");
-                            if (schedules != null && !schedules.isEmpty()) {
-                                //AlertBusinessLogic logic = new AlertBusinessLogic();
+                            //Integer vehicleIdObj = (Integer) request.getSession().getAttribute("vehicle_id");
+                            //int vehicleid = (vehicleIdObj != null) ? vehicleIdObj : -1;
+                            List<FuelConsumptionDTO> fuels = (List<FuelConsumptionDTO>) request.getAttribute("fuel_consumptions");
+                            if (fuels != null && !fuels.isEmpty()) {
+                                FuelConsumptionBusinessLogic logic = new FuelConsumptionBusinessLogic();
                         %>
 
                         <table border="1">
                             <thead>
                                 <tr>
-                                    <th>Schedule Id</th>
-                                    <th>Route Number</th>
-                                    <th>Station Name </th>
-                                    <th>Schedule Number</th>
-                                    <th>Schedule arrive time</th>
-                                    <th>Schedule depart time</th>
+                                    <th>FC Id</th>
+                                    <th>Vehicle Number</th>
+                                    <th>Date</th>
+                                    <th>Miles Traveled</th>
+                                    <th>Unit Price</th>
                                     <th style="width:200px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for (RouteScheduleDTO schedule : schedules) {
-                                    int schedule_id = schedule.getScheduleId();
+                                <% for (FuelConsumptionDTO fuel : fuels) {
+                                    int fc_id = fuel.getFcId();
                                 %>
                                 <tr>
-                                    <td><%= schedule_id %></td>
-                                    <td><%= logic.getRouteByScheduleId(schedule_id).getRouteNumber() %></td>
-                                    <td><%= logic.getStationByScheduleId(schedule_id).getStationName() %></td>
-                                    <td><%= schedule.getScheduleNumber() %></td>
-                                    <td><%= schedule.getScheduleArriveTime()%></td>
-                                    <td><%= schedule.getScheduleDepartTime()%></td>
+                                    <td><%= fc_id %></td>
+                                    <td><%= logic.getVehicleByFCId(fc_id).getVehicleNumber() %></td>
+                                    <td><%= fuel.getDate() %></td>
+                                    <td><%= fuel.getMilesTraveled() %></td>
+                                    <td><%= fuel.getUnitPrice() %></td>
                                     <td>
-                                        <a href="<%= request.getContextPath()%>/LogStopTime?schedule_id=<%= schedule_id %>&get=log_new"
-                                           class="btn btn-sm btn-primary">Log Time</a>
-                                        <a href="<%= request.getContextPath()%>/LogStopTime?schedule_id=<%= schedule_id %>&get=log_update"
+                                        <a href="<%= request.getContextPath()%>/FuelConsumption?fc_id=<%= fc_id %>&get=log_update"
                                            class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="<%= request.getContextPath()%>/FuelConsumption?fc_id=<%= fc_id %>&get=log_delete"
+                                           class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
                                     </td>
                                 </tr>
                                 <% }%>
@@ -116,6 +115,7 @@
                         <%
                             }
                         %>
+                        <input type="submit" name="action" class="submit-btn" value="Log New Fuel Consumption" />  
                     </form>
                 </div>
             </div>
