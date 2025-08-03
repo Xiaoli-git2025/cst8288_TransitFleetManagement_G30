@@ -4,6 +4,7 @@
  * Description: user dao
  */
 package dao;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
@@ -11,18 +12,22 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.StationTimeDTO;
+
 /**
  * DAO implements DAOInterface
- * @author 
+ *
+ * @author
  */
-public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
+public class StationTimeDAO implements DAOInterface<StationTimeDTO> {
+
     /**
-     * get all 
+     * get all
+     *
      * @return list
      * @throws SQLException throw SQLExpection
      */
     @Override
-    public List<StationTimeDTO> getAll()throws SQLException{
+    public List<StationTimeDTO> getAll() throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -69,24 +74,25 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
 
     /**
      * add object
+     *
      * @param obj added object
      * @return true for success, false for fail
      */
     public boolean add(StationTimeDTO obj) {
-        Connection con =null;
+        Connection con = null;
         PreparedStatement pstmt = null;
         boolean ret = true;
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement("INSERT INTO stationtime (log_date,arrive_time,depart_time,note,schedule_id,user_id) VALUES(?, ?, ?,?,?,?)");
-        
-            pstmt.setDate(1,obj.getLogDate());
-            pstmt.setTime(2,obj.getArriveTime());
-            pstmt.setTime(3,obj.getDepartTime());
+
+            pstmt.setDate(1, obj.getLogDate());
+            pstmt.setTime(2, obj.getArriveTime());
+            pstmt.setTime(3, obj.getDepartTime());
             pstmt.setString(4, obj.getNote());
             pstmt.setInt(5, obj.getScheduleId());
             pstmt.setInt(6, obj.getUserId());
-            pstmt.executeUpdate(); 
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,7 +106,7 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
                 System.out.println(ex.getMessage());
             }
             try {
-               if (con != null) {
+                if (con != null) {
                     con.close();
                 }
             } catch (SQLException ex) {
@@ -109,9 +115,10 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
         }
         return ret;
     }
-    
+
     /**
      * get object by id
+     *
      * @param objId object id
      * @return object
      */
@@ -130,14 +137,14 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 obj = new StationTimeDTO();
-                obj.setTimeId(rs.getInt("time_id")); 
+                obj.setTimeId(rs.getInt("time_id"));
                 obj.setLogDate(rs.getDate("log_date"));
                 obj.setArriveTime(rs.getTime("arrive_time"));
                 obj.setDepartTime(rs.getTime("depart_time"));
                 obj.setNote(rs.getString("note"));
                 obj.setScheduleId(rs.getInt("schedule_id"));
                 obj.setUserId(rs.getInt("user_id"));
- 
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -160,9 +167,10 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
         }
         return obj;
     }
-    
+
     /**
      * update object
+     *
      * @param obj updated object
      * @return true for success, false for fail
      */
@@ -182,7 +190,7 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
             pstmt.setString(4, obj.getNote());
             pstmt.setInt(5, obj.getScheduleId());
             pstmt.setInt(6, obj.getUserId());
-            pstmt.setInt(7, obj.getTimeId()); 
+            pstmt.setInt(7, obj.getTimeId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;
@@ -205,9 +213,10 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
         }
         return ret;
     }
-    
+
     /**
      * delete object
+     *
      * @param objId object id
      * @return true for success, false for fail
      */
@@ -240,4 +249,49 @@ public class StationTimeDAO implements DAOInterface<StationTimeDTO>{
         }
         return ret;
     }
+
+    public List<StationTimeDTO> getStationTimesByUserId(int operatorUserId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<StationTimeDTO> objs = new ArrayList<>();
+
+        try {
+            con = DataSource.getConnection();
+            pstmt = con.prepareStatement("SELECT * FROM stationtime WHERE user_id = ? ORDER BY time_id");
+            pstmt.setInt(1, operatorUserId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                StationTimeDTO obj = new StationTimeDTO();
+                obj.setTimeId(rs.getInt("time_id"));
+                obj.setLogDate(rs.getDate("log_date"));
+                obj.setArriveTime(rs.getTime("arrive_time"));
+                obj.setDepartTime(rs.getTime("depart_time"));
+                obj.setNote(rs.getString("note"));
+                obj.setScheduleId(rs.getInt("schedule_id"));
+                obj.setUserId(rs.getInt("user_id"));
+                objs.add(obj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+
+        return objs;
+    }
+
 }
