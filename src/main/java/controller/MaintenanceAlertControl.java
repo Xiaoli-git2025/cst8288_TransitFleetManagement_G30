@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import model.*;
 
 /**
- *
+ * Servlet controller for operator log maintenance alert
  * @author Administrator
  */
 @WebServlet(name = "MaintenanceAlertControl", urlPatterns = {"/MaintenanceAlert"})

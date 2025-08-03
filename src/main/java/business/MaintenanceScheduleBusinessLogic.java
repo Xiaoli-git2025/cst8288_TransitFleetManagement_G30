@@ -7,8 +7,8 @@ import model.MaintenanceScheduleDTO;
 
 
 /**
- *
- * @author Administrator
+ * business logic for alert and schedule
+ * @author Xiaoli He
  */
 public class MaintenanceScheduleBusinessLogic {
     /**

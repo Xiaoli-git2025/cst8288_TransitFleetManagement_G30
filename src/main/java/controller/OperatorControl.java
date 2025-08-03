@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import model.*;
 
 /**
- *
- * @author Administrator
+ * Servlet controller for operator functions
+ * @author Xiaoli He
  */
 @WebServlet(name = "OperatorControl", urlPatterns = {"/Operator"})
 public class OperatorControl extends HttpServlet {

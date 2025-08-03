@@ -5,10 +5,14 @@
 package business.alert_maint;
 import model.MaintenanceScheduleDTO;
 /**
- *
+ * observer interface
  * @author Xiaoli He
  */
 public interface Observer {
+    /**
+     * observer update method
+     * @param schedule schedule object
+     */
     void update(MaintenanceScheduleDTO schedule);
 }
 
