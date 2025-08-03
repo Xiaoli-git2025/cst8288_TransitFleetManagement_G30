@@ -1,6 +1,5 @@
 /*
  Student Name: Xiaoli He, Shan Cai, Yanqi Huang
- Student ID: 040469755
  Project Name: Tranisit Fleet Management
  Section: CST8288 Section 024
  Due Date: Aug 08, 2025
