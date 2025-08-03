@@ -1,5 +1,10 @@
 package controller;
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 import business.RouteBusinessLogic;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,18 +18,32 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.RouteDTO;
-import model.StationDTO;
-
+/**
+ * RouteControl is a servlet that manages CRUD operations for routes in the system.
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
+ */
 @WebServlet(name = "RouteControl", urlPatterns = {"/RouteControl"})
 public class RouteControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public RouteBusinessLogic rblogic;
-
+    /**
+     * Initializes the servlet by creating an instance of RouteBusinessLogic.
+     *
+     * @throws ServletException if initialization fails
+     */
     @Override
     public void init() throws ServletException {
         rblogic = new RouteBusinessLogic();
     }
-
+    /**
+     * Handles POST requests for route operations based on the "action" parameter.
+     *
+     * @param request  the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -52,7 +71,14 @@ public class RouteControl extends HttpServlet {
             throw new ServletException(e);
         }
     }
-
+     /**
+     * Handles GET requests for route operations based on the "action" parameter.
+     *
+     * @param request  the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -74,7 +100,15 @@ public class RouteControl extends HttpServlet {
         }
     }
     
-
+    /**
+     * Retrieves all routes and forwards them to the RouteView JSP.
+     *
+     * @param request  the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws SQLException if a database error occurs
+     * @throws ServletException if forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     public void getAllRoutes(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         List<RouteDTO> allRoutes = rblogic.getAllObjects();
@@ -87,7 +121,15 @@ public class RouteControl extends HttpServlet {
         request.setAttribute("msg", request.getParameter("msg"));
         request.getRequestDispatcher("/views/admin/RouteView.jsp").forward(request, response);
     }
-
+    /**
+     * Adds a new route using data from the request.
+     *
+     * @param request  the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws SQLException if a database error occurs
+     * @throws ServletException if adding fails or forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     private void addRoute(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         RouteDTO route = new RouteDTO();
@@ -101,7 +143,15 @@ public class RouteControl extends HttpServlet {
             request.getRequestDispatcher("/views/admin/AddRoute.jsp").forward(request, response);
         }
     }
-
+    /**
+     * Updates an existing route with data from the request.
+     *
+     * @param request  the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws SQLException if a database error occurs
+     * @throws ServletException if updating fails or forwarding fails
+     * @throws IOException if an I/O error occurs
+     */
     private void updateRoute(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         RouteDTO route = new RouteDTO();
@@ -116,7 +166,15 @@ public class RouteControl extends HttpServlet {
             request.getRequestDispatcher("/views/admin/EditRoute.jsp").forward(request, response);
         }
     }
-
+    /**
+     * Deletes a route by ID.
+     *
+     * @param request  the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws SQLException if a database error occurs
+     * @throws ServletException if deletion fails
+     * @throws IOException if an I/O error occurs
+     */
     private void deleteRoute(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, ServletException, IOException {
         int routeId = Integer.parseInt(request.getParameter("routeId"));
@@ -127,6 +185,15 @@ public class RouteControl extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
+    /**
+     * Loads route data into the edit form.
+     *
+     * @param request  the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws ServletException if the route is not found or format is invalid
+     * @throws IOException if an I/O error occurs
+     * @throws SQLException if a database error occurs
+     */
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         try {
