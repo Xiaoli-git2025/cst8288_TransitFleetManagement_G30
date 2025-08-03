@@ -21,8 +21,12 @@ public class UpdateMaintScheduleCommand implements Command {
     }
 
     @Override
-    public void execute() {
-        dao.update(schedule);
-        subject.notifyObservers(schedule); // Notify observers (e.g., AlertObserver)
+    public boolean execute() {
+        if(dao.update(schedule)){
+            subject.notifyObservers(schedule);
+            return true;
+        }
+        else
+            return false;
     }
 }

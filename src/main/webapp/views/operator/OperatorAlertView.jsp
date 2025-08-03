@@ -52,7 +52,7 @@
                         <span class="menu-title">Information Check</span>
                         <ul class="submenu">
                             <li><a href="${pageContext.request.contextPath}/Operator?get=vehicle_alert">Vehicle Alert</a></li>
-                            <li><a href="${pageContext.request.contextPath}/Operator?get=maintance_schedule">Maintenance Schedule</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Operator?get=maintenance_schedule">Maintenance Schedule</a></li>
                             <li><a href="${pageContext.request.contextPath}/Operator?get=operator_performance">Individual Performance</a></li>
                         </ul>
                     </li>
@@ -138,18 +138,14 @@
         
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                const select = document.getElementById("vehicleSelect");
-                const link = document.getElementById("reportLink");
+                const menuItems = document.querySelectorAll(".menu-item .menu-title");
 
-                // Update the link when selection changes
-                select.addEventListener("change", function () {
-                    const selectedId = select.value;
-                    link.href = `${link.dataset.base}?get=new_alert&vehicle_id=${selectedId}`;
+                menuItems.forEach(function (menuTitle) {
+                    menuTitle.addEventListener("click", function () {
+                        const submenu = this.nextElementSibling;
+                        submenu.classList.toggle("show");
+                    });
                 });
-
-                // Optional: update immediately on page load if there's a selected value
-                const initialId = select.value;
-                link.href = `${link.dataset.base}?get=new_alert&vehicle_id=${initialId}`;
             });
         </script>
     </body>

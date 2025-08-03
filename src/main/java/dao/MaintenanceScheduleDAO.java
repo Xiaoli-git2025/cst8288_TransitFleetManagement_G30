@@ -40,6 +40,7 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
                 obj.setScheduleDate(rs.getDate("schedule_date"));
                 obj.setNote(rs.getString("note"));
                 obj.setMaintenanceCost(rs.getBigDecimal("maintenance_cost"));
+                obj.setCompleted(rs.getBoolean("completed"));
                 objs.add(obj);
             }
         } catch (SQLException e) {
@@ -77,11 +78,12 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO maintenanceschedule (maintenance_id, schedule_date, note, maintenance_cost) VALUES(?, ?, ?,?)");
+            pstmt = con.prepareStatement("INSERT INTO maintenanceschedule (maintenance_id, schedule_date, note, maintenance_cost, completed) VALUES(?, ?, ?,?,?)");
             pstmt.setInt(1, obj.getMaintenanceId());
             pstmt.setDate(2, obj.getScheduleDate());
             pstmt.setString(3, obj.getNote());
             pstmt.setBigDecimal(4, obj.getMaintenanceCost());
+            pstmt.setBoolean(5, obj.isCompleted());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,6 +132,50 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
                 obj.setScheduleDate(rs.getDate("schedule_date"));
                 obj.setNote(rs.getString("note"));
                 obj.setMaintenanceCost(rs.getBigDecimal("maintenance_cost"));
+                obj.setCompleted(rs.getBoolean("completed"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+
+                //if (con != null) {
+                //    con.close();
+                //}
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return obj;
+    }
+    
+    public MaintenanceScheduleDTO getByAlertId(int objId) {
+        Connection con;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        MaintenanceScheduleDTO obj = null;
+
+        try {
+            con = DataSource.getConnection();
+            pstmt = con.prepareStatement(
+                    "SELECT * FROM maintenanceschedule WHERE maintenance_id = ?");
+            pstmt.setInt(1, objId);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                obj = new MaintenanceScheduleDTO();
+                obj.setScheduleId(rs.getInt("schedule_id"));
+                obj.setMaintenanceId(rs.getInt("maintenance_id"));
+                obj.setScheduleDate(rs.getDate("schedule_date"));
+                obj.setNote(rs.getString("note"));
+                obj.setMaintenanceCost(rs.getBigDecimal("maintenance_cost"));
+                obj.setCompleted(rs.getBoolean("completed"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,13 +212,14 @@ public class MaintenanceScheduleDAO implements DAOInterface<MaintenanceScheduleD
         try {
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
-                    "UPDATE maintenanceschedule SET maintenance_id = ?, schedule_date = ?, note = ?, maintenance_cost = ? "
+                    "UPDATE maintenanceschedule SET maintenance_id = ?, schedule_date = ?, note = ?, maintenance_cost = ?, completed = ? "
                     + "WHERE schedule_id = ?");
             pstmt.setInt(1, object.getMaintenanceId());
             pstmt.setDate(2, object.getScheduleDate());
             pstmt.setString(3, object.getNote());
             pstmt.setBigDecimal(4, object.getMaintenanceCost());
-            pstmt.setInt(5, object.getScheduleId());
+            pstmt.setBoolean(5, object.isCompleted());
+            pstmt.setInt(6, object.getScheduleId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;

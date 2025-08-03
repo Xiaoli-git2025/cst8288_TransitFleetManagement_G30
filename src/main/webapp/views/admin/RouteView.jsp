@@ -61,7 +61,7 @@
             <div class="container">
                 <div class="box_with_menu">
                     <div style="text-align:right; margin-bottom:1rem;">
-                        <a href="${pageContext.request.contextPath}/AddRoute"
+                        <a href="${pageContext.request.contextPath}/views/admin/AddRoute.jsp"
                            class="btn btn-outline-primary">Add Route</a>
                     </div>
 
@@ -81,10 +81,11 @@
                                 <td><%= route.getRouteNumber()%></td>
                                 <td><%= route.getDescription()%></td>
                                 <td>
-                                    <a href="<%= request.getContextPath()%>/EditRoute?id=<%= route.getRouteId()%>"
+                                    <a href="<%= request.getContextPath()%>/views/admin/EditRoute.jsp?id=<%= route.getRouteId()%>"
                                        class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="<%= request.getContextPath()%>/DeleteRoute?id=<%= route.getRouteId()%>"
-                                       class="btn btn-sm btn-primary">Delete</a>
+                                    <a href="<%= request.getContextPath()%>/RouteControl?action=DeleteRoute&routeId=<%= route.getRouteId()%>"
+                                       class="btn btn-sm btn-danger" 
+                                       onclick="return confirm('Are you sure you want to delete this component?')">Delete</a>
                                 </td>
                             </tr>
                             <% }%>

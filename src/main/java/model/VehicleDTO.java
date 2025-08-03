@@ -26,7 +26,7 @@ public class VehicleDTO {
 
     // Total capacity of the vehicle (could represent seats or weight limit)
     private int capacity;
-
+    
     // Constructors
     public VehicleDTO() {}
 
@@ -96,5 +96,6 @@ public class VehicleDTO {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
+
+    }   
 }

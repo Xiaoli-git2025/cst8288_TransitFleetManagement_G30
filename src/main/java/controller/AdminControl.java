@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import business.*;
+import business.builder.VehicleBusinessLogic;
 import model.*;
 
 /**
@@ -29,12 +30,20 @@ public class AdminControl extends HttpServlet {
      * business logic instance
      */
     private RouteBusinessLogic logic;
+    private VehicleComponentBusinessLogic vclogic;
+    private VehicleBusinessLogic vlogic;
+    private StationBusinessLogic sblogic;
+    private RouteScheduleBusinessLogic rsblogic;
     /**
      * init method
      */
     @Override
     public void init() {
         logic = new RouteBusinessLogic();
+        vclogic = new VehicleComponentBusinessLogic();
+        vlogic = new VehicleBusinessLogic();
+        sblogic = new StationBusinessLogic();
+        rsblogic = new RouteScheduleBusinessLogic();
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -57,21 +66,25 @@ public class AdminControl extends HttpServlet {
                     request.getRequestDispatcher("/views/admin/RouteView.jsp").forward(request, response);
                     break;
                 case "station":
-                    //getAllStations, list, add, delete, update
-                    request.getRequestDispatcher("/views/admin/StationView.jsp").forward(request, response);
+                    List<StationDTO> station = sblogic.getAllObjects();
+                    request.setAttribute("stations", station);
+                    request.getRequestDispatcher("/views/admin/StationView.jsp").forward(request, response); 
                     break;
                 case "route_schedule":
-                    //getAllRouteSchedules, list add, delete, uodate
+                    List<RouteScheduleDTO> routeSchedules = rsblogic.getAllObjects();
+                    request.setAttribute("schedules", routeSchedules);
                     request.getRequestDispatcher("/views/admin/RouteScheduleView.jsp").forward(request, response);
                     break;
                 case "vehicle":
-                    //getAllVehicles, list ,add, delete, update
-                    request.getRequestDispatcher("/views/admin/VehicleView.jsp").forward(request, response);
+                    List<VehicleDTO> vehicle = vlogic.getAllVehicles();
+                    request.setAttribute("vehicles", vehicle);
+                    request.getRequestDispatcher("/views/admin/Vehicle.jsp").forward(request, response);
                     break;
                 case "component":
                     //getAllComponents, list, add, delete, update
-                    request.getRequestDispatcher("/views/admin/ComponentView.jsp").forward(request, response);
-                    break;
+                    List<VehicleComponentDTO> vehicleComponent = vclogic.getAllObjects();
+                    request.setAttribute("vehicleComponents", vehicleComponent);
+                    request.getRequestDispatcher("/views/admin/VehicleComponent.jsp").forward(request, response);
                 default:
                     break;
             }

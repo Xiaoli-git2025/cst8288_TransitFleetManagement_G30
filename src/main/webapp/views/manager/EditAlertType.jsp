@@ -20,14 +20,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Add Alert Type</title>
+        <title>Edit Alert Type</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     </head>
     <body class="body">
         <!-- Header -->
         <div class="header">
-            <h1>Add Alert Type</h1>
+            <h1>Edit Alert Type</h1>
             <div class="header-buttons">
                 <button class="icon-btn" onclick="history.back()" title="Back">
                     <i class="fas fa-arrow-left"></i>

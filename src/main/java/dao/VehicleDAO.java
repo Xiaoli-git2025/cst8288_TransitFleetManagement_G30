@@ -79,7 +79,7 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
         boolean ret = true;
         try {
             con = DataSource.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO vehicle (vehicle_number,consumption_rate,max_passenger,fuel_type,route_id,capacity) VALUES(?, ?, ?,?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO vehicle (vehicle_number,consumption_rate,max_passenger,fuel_type,route_id,capacity,component_id) VALUES(?, ?, ?,?,?,?,?)");
             
             pstmt.setString(1,obj.getVehicleNumber());
             pstmt.setBigDecimal(2, obj.getConsumptionRate());
@@ -174,14 +174,14 @@ public class VehicleDAO implements DAOInterface<VehicleDTO>{
             con = DataSource.getConnection();
             pstmt = con.prepareStatement(
                     "UPDATE vehicle SET vehicle_number = ?, consumption_rate = ?, max_passenger = ?, fuel_type = ?, "
-                    + "route_id = ?, capacity = ?  WHERE vehicle_id = ?");
+                    + "route_id = ?, capacity = ? WHERE vehicle_id = ?");
             pstmt.setString(1, obj.getVehicleNumber());
             pstmt.setBigDecimal(2, obj.getConsumptionRate());
             pstmt.setInt(3, obj.getMaxPassenger());
             pstmt.setString(4, obj.getFuelType());
             pstmt.setInt(5, obj.getRouteId());
             pstmt.setInt(6, obj.getCapacity()); 
-            pstmt.setInt(7, obj.getVehicleId());
+            pstmt.setInt(8, obj.getVehicleId());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected == 0) {
                 ret = false;

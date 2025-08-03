@@ -33,6 +33,30 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.mikeleith.mockery</groupId>
+            <artifactId>mockery-annotations</artifactId>
+            <version>1.0.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.18.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>cn.jdevelops</groupId>
+            <artifactId>starters-beans</artifactId>
+            <version>2.0.6</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.kie.j2cl.tools</groupId>
+            <artifactId>junit-emul</artifactId>
+            <version>v20241110-1</version>
+            <type>pom</type>
+        </dependency>
     </dependencies>
     
     <build>

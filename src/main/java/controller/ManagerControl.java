@@ -15,9 +15,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import model.OperatorPerformanceDTO;
 import dao.OperatorPerformanceDAO;
 import model.MaintenanceAlertDTO;
+
+
+
+import business.*;
+import dao.*;
+import model.*;
+import business.FuelCostStrategy.*;
+import java.util.List;
 
 /**
  *
@@ -26,6 +35,19 @@ import model.MaintenanceAlertDTO;
 @WebServlet(name = "ManagerControl", urlPatterns = {"/Manager"})
 public class ManagerControl extends HttpServlet {
 
+    /**
+     * business logic instance
+     */
+    private AlertBusinessLogic logic;
+    private FuelConsumptionDAO fuelDao;
+    /**
+     * init method
+     */
+    @Override
+    public void init() {
+        logic = new AlertBusinessLogic();
+        fuelDao = new FuelConsumptionDAO();
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -47,11 +69,15 @@ public class ManagerControl extends HttpServlet {
                     break;
                 case "all_alerts":
                     //getActiveAlerts, list, update resolved
+                    List<MaintenanceAlertDTO> malerts = logic.getActiveMaintAlert();
+                    request.setAttribute("maint_alerts", malerts);
                     request.getRequestDispatcher("/views/manager/ActiveAlertView.jsp").forward(request, response);
                     break;
                 case "maintenance_schedule":
                     //getActiveMaintenanceSchedule, list, add, delete, update
-                    request.getRequestDispatcher("/views/manager/ActiveMaintScheduleView.jsp").forward(request, response);
+                    List<MaintenanceScheduleDTO> schedules = logic.getActiveSchedules();
+                    request.setAttribute("schedules", schedules);
+                    request.getRequestDispatcher("/views/manager/MaintenanceScheduleView.jsp").forward(request, response);
                     break;
                 case "operator_performance":
                     //getPerformance, list, sort, filtereByOperatorName
@@ -80,6 +106,13 @@ public class ManagerControl extends HttpServlet {
                     break;
                 case "fuel_energy_cost":
                     //getAllCostOnFuelEnergy, list, group by vehicle type, vehicle
+                    List<FuelConsumptionDTO> fuelData = fuelDao.getAll();
+                    for (FuelConsumptionDTO fc : fuelData) {
+                        FuelCostStrategy strategy = FuelCostStrategyFactory.getStrategyByVehicleId(fc.getVehicleId());
+                        java.math.BigDecimal cost = strategy.calculateCost(fc.getUnitPrice(), fc.getMilesTraveled());
+                        fc.setCost(cost);
+                    }
+                    request.setAttribute("fuel_consumption", fuelData);
                     request.getRequestDispatcher("/views/manager/AllCostOnFuelEnergyView.jsp").forward(request, response);
                     break;
                 default:

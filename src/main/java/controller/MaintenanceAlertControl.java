@@ -58,13 +58,18 @@ public class MaintenanceAlertControl extends HttpServlet {
                 case "delete_alert":
                     alert_id = Integer.parseInt(request.getParameter("alert_id"));
                     //vehicle_id = logic.getVehicleIdByAlertId(alert_id);
-                    logic.deleteMaintAlert(alert_id);
-                    List<MaintenanceAlertDTO> maintAlerts = logic.getMaintAlertByUserId_VehicleId(vehicle_id, user_id);
-                    request.setAttribute("maint_alerts", maintAlerts);
-                    List<VehicleDTO> vehicles = logic.getVehiclesByUserId(user_id);
-                    request.setAttribute("vehicles", vehicles);
-                    request.setAttribute("cur_vehicle", vehicle_id);
-                    request.getRequestDispatcher("/views/operator/OperatorAlertView.jsp").forward(request, response);
+                    if(logic.deleteMaintAlert(alert_id)){
+                        List<MaintenanceAlertDTO> maintAlerts = logic.getActiveMaintAlertByUserId_VehicleId(vehicle_id, user_id);
+                        request.setAttribute("maint_alerts", maintAlerts);
+                        List<VehicleDTO> vehicles = logic.getVehiclesByUserId(user_id);
+                        request.setAttribute("vehicles", vehicles);
+                        request.setAttribute("cur_vehicle", vehicle_id);
+                        request.getRequestDispatcher("/views/operator/OperatorAlertView.jsp").forward(request, response);
+                    }
+                    else{
+                        request.setAttribute("errorMsg", "Delete Maintenance Alert Fail.");
+                        request.getRequestDispatcher("/error.jsp").forward(request, response);
+                    }
                     break;
                 case "update_alert":
                     alert_id = Integer.parseInt(request.getParameter("alert_id"));
@@ -77,13 +82,6 @@ public class MaintenanceAlertControl extends HttpServlet {
                     request.setAttribute("alert_types", logic.getAllAlertTypes());
                     request.getRequestDispatcher("/views/operator/OperatorAlertUpdateView.jsp").forward(request, response);
                     break;
-                /*case "new_alert":
-                    //vehicle_id = Integer.parseInt(request.getParameter("vehicle_id"));
-                    request.setAttribute("cur_vehicle", logic.getVehicleByVehicleId(vehicle_id).getVehicleNumber());
-                    request.setAttribute("components", logic.getComponentsByVehicleId(vehicle_id));
-                    request.setAttribute("alert_types", logic.getAllAlertTypes());
-                    request.getRequestDispatcher("/views/operator/OperatorAlertAddView.jsp").forward(request, response);
-                    break;*/
                 default:
                     break;
             }
@@ -112,7 +110,7 @@ public class MaintenanceAlertControl extends HttpServlet {
                 case "Load":
                     vehicle_id = Integer.parseInt(request.getParameter("vehicle_id"));
                     request.getSession().setAttribute("vehicle_id", vehicle_id);
-                    List<MaintenanceAlertDTO> maintAlerts = logic.getMaintAlertByUserId_VehicleId(vehicle_id, user_id);
+                    List<MaintenanceAlertDTO> maintAlerts = logic.getActiveMaintAlertByUserId_VehicleId(vehicle_id, user_id);
                     request.setAttribute("maint_alerts", maintAlerts);
                     request.setAttribute("vehicles", vehicles);
                     request.setAttribute("cur_vehicle", vehicle_id);
@@ -144,7 +142,7 @@ public class MaintenanceAlertControl extends HttpServlet {
                     }
                     else{
                         request.setAttribute("errorMsg", "Report Maintenance Alert Fail.");
-                            request.getRequestDispatcher("/error.jsp").forward(request, response);
+                        request.getRequestDispatcher("/error.jsp").forward(request, response);
                     }
                     break;
                 case "Update Alert":
@@ -168,7 +166,7 @@ public class MaintenanceAlertControl extends HttpServlet {
                     }
                     else{
                         request.setAttribute("errorMsg", "Update Maintenance Alert Fail.");
-                            request.getRequestDispatcher("/error.jsp").forward(request, response);
+                        request.getRequestDispatcher("/error.jsp").forward(request, response);
                     }
                     break;
                 default:
