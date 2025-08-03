@@ -85,4 +85,8 @@ public class DataSource {
 
         return info;
     }
+
+    public static Object getInstance() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
