@@ -1,8 +1,16 @@
 package model;
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Student ID: 040469755
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 /**
  * FuelConsumptionDTO is a Data Transfer Object for the 'FuelConsumption' table.
  * It represents fuel usage records for vehicles, including distance traveled and fuel cost.
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20 ,2025
  */
 public class FuelConsumptionDTO {
 

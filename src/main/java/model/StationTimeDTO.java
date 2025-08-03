@@ -1,31 +1,17 @@
 package model;
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Student ID: 040469755
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 import java.sql.Date;
 import java.sql.Time;
-
 /**
  * Data Transfer Object for the StationTime table.
- * <p>
- * Represents a station's arrival and departure time log
- * associated with a specific route schedule and user.
- * </p>
- * 
- * Table structure:
- * <pre>
- * CREATE TABLE StationTime (
- *     time_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
- *     log_date DATE,
- *     arrive_time TIME,
- *     depart_time TIME,
- *     note TEXT,
- *     schedule_id INT,
- *     user_id INT,
- *     FOREIGN KEY (schedule_id) REFERENCES RouteSchedule(schedule_id),
- *     FOREIGN KEY (user_id) REFERENCES Users(user_id)
- * );
- * </pre>
- * 
- * @author YourName
+ *@author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,
  */
 public class StationTimeDTO {
 
