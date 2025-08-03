@@ -1,8 +1,10 @@
-/* File: DataSource.java
- * Author: Xiaoli He
- * Date: 2025/7/22
- * Description: author dao
- */
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Student ID: 040469755
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 package dao;
 
 import java.sql.SQLException;
@@ -10,7 +12,8 @@ import java.util.List;
 
 /**
  * Interface for DAO
- * @author Xiaoli He
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
  * @param <T> :DTO
  */
 public interface DAOInterface<T> {

@@ -1,8 +1,10 @@
-/* File: DataSource.java
- * Author: Xiaoli He
- * Date: 2025/7/22
- * Description: user dao
- */
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Student ID: 040469755
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 package dao;
 
 import java.util.List;
@@ -16,7 +18,8 @@ import model.MaintenanceAlertDTO;
 /**
  * DAO implements DAOInterface
  *
- * @author
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
  */
 public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO> {
 
@@ -214,9 +217,6 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO> {
                     pstmt.close();
                 }
 
-                //if (con != null) {
-                //    con.close();
-                //}
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -258,9 +258,6 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO> {
                     pstmt.close();
                 }
 
-                //if (con != null) {
-                //    con.close();
-                //}
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -293,9 +290,6 @@ public class MaintenanceAlertDAO implements DAOInterface<MaintenanceAlertDTO> {
                     pstmt.close();
                 }
 
-                //if (con != null) {
-                //    con.close();
-                //}
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }

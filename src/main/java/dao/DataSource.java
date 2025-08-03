@@ -1,14 +1,14 @@
-/* File: DataSource.java
- * Author: Xiaoli He
- * Date: 2025/5/23
- * Description: Connect with MySQL
- */
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Student ID: 040469755
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 package dao;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +16,8 @@ import java.util.Properties;
 
 /**
  * This class is used to connect to the database, using Singleton pattern
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
  */
 public class DataSource {
 

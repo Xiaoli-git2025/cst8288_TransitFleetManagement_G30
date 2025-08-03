@@ -1,17 +1,33 @@
 package dao;
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Student ID: 040469755
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 import model.OperatorPerformanceDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Data Access Object class for retrieving operator performance
+ *
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
+ */
 public class OperatorPerformanceDAO {
-
+    
+     /**
+     * Retrieves a list of performance logs for all operators.
+     * Each log includes user information, actual arrival/departure times,
+     * and scheduled arrival/departure times.
+     *
+     * @return a list of OperatorPerformanceDTO objects containing performance data
+     */
     public List<OperatorPerformanceDTO> getAllOperatorPerformanceLogs() {
         List<OperatorPerformanceDTO> performanceList = new ArrayList<>();
         String sql
@@ -56,7 +72,13 @@ public class OperatorPerformanceDAO {
 
         return performanceList;
     }
-
+     /**
+     * Retrieves performance logs for a specific operator by their user ID.
+     * Each log includes actual and scheduled arrival/departure times.
+     *
+     * @param userId the user ID of the operator
+     * @return a list of OperatorPerformanceDTO objects for the specified operator
+     */
     public List<OperatorPerformanceDTO> getPerformanceByUserId(int userId) {
         List<OperatorPerformanceDTO> performanceList = new ArrayList<>();
         String sql

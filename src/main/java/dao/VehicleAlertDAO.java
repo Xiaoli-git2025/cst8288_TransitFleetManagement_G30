@@ -1,5 +1,11 @@
 package dao;
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Student ID: 040469755
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +15,9 @@ import java.util.List;
 import model.VehicleAlertDTO;
 
 /**
- *
- * @author shano
+ * Data Transfer Object (DTO) representing a vehicle alert in the system.
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
  */
 /**
  * Data Access Object (DAO) class for retrieving vehicle alert information. This
