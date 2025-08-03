@@ -1,10 +1,17 @@
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 package model;
 
 /**
  * Data Transfer Object (DTO) representing vehicle alert information.
  * This class encapsulates the essential details of a vehicle alert including
  * the associated user and vehicle identifiers, alert type, and description.
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
  */
 public class VehicleAlertDTO {
     private int user_id;

@@ -1,5 +1,10 @@
 package business.builder;
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 import dao.VehicleDAO;
 import model.VehicleDTO;
 import java.math.BigDecimal;
@@ -8,7 +13,9 @@ import java.util.List;
 
 /**
  * VehicleService handles business logic for vehicle operations,
- * combining DAO access with design patterns (Builder and Simple Factory).
+ * combining DAO access with design patterns (Builder and Simple Factory)
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
  */
 public class VehicleBusinessLogic {
 

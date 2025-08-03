@@ -1,31 +1,17 @@
 package model;
-
+/*
+ Student Name: Xiaoli He, Shan Cai, Yanqi Huang
+ Project Name: Tranisit Fleet Management
+ Section: CST8288 Section 024
+ Due Date: Aug 08, 2025
+*/
 import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
  * Data Transfer Object for the MaintenanceAlert table.
- * <p>
- * Represents a maintenance alert raised for a specific vehicle component,
- * reported by a user, and optionally linked to a predefined alert.
- * </p>
- *
- * Table structure:
- * <pre>
- * CREATE TABLE MaintenanceAlert (
- *     maintenance_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
- *     alert_id INT,
- *     component_id INT,
- *     alert_date DATE,
- *     reporter_id INT,
- *     resolved BOOLEAN,
- *     FOREIGN KEY (alert_id) REFERENCES Alert(alert_id),
- *     FOREIGN KEY (component_id) REFERENCES VehicleComponent(component_id),
- *     FOREIGN KEY (reporter_id) REFERENCES Users(user_id)
- * );
- * </pre>
- *
- * @author YourName
+ * @author Xiaoli He, Shan Cai, Yanqi Huang
+ * @since July 20,2025
  */
 public class MaintenanceAlertDTO {
 
