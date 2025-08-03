@@ -25,8 +25,8 @@ import model.FuelConsumptionDTO;
 import model.VehicleDTO;
 
 /**
- *
- * @author Administrator
+ * Servlet controller for Fuel consumption part
+ * @author Xiaoli He
  */
 @WebServlet(name = "FuelConsumptionControl", urlPatterns = {"/FuelConsumption"})
 public class FuelConsumptionControl extends HttpServlet {

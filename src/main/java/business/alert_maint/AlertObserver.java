@@ -7,16 +7,24 @@ import dao.MaintenanceAlertDAO;
 import model.MaintenanceAlertDTO;
 import model.MaintenanceScheduleDTO;
 /**
- *
- * @author Administrator
+ * Observer added to maintenance alert resolved based on the maintenance schedule completed
+ * @author Xiaoli He
  */
 public class AlertObserver implements Observer {
     private MaintenanceAlertDAO m_alertDAO;
 
+    /**
+     * constructor
+     * @param m_alertDAO dao for maintenance alert
+     */
     public AlertObserver(MaintenanceAlertDAO m_alertDAO) {
         this.m_alertDAO = m_alertDAO;
     }
     
+    /**
+     * observer update resolved based on maintenance schedule
+     * @param schedule 
+     */
     public void update(MaintenanceScheduleDTO schedule) {
         if (schedule.isCompleted()) {
             // Find the related alert using the schedule’s maintenance_id

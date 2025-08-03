@@ -5,10 +5,16 @@
 package business.FuelCostStrategy;
 
 /**
- *
- * @author Administrator
+ * Diesel Fuel Cost
+ * @author Xiaoli He
  */
 public class DieselFuelCostStrategy implements FuelCostStrategy {
+    /**
+     * calculate cost
+     * @param unitPrice unit price
+     * @param milesTraveled miles traveled
+     * @return cost
+     */
     public java.math.BigDecimal calculateCost(java.math.BigDecimal unitPrice, java.math.BigDecimal milesTraveled) {
         return unitPrice.multiply(milesTraveled).multiply(new java.math.BigDecimal("0.05"));
     }

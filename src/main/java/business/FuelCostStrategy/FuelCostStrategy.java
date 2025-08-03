@@ -5,9 +5,15 @@
 package business.FuelCostStrategy;
 
 /**
- *
- * @author Administrator
+ * Strategy interface
+ * @author Xiaoli He
  */
 public interface FuelCostStrategy {
+    /**
+     * calculate cost
+     * @param unitPrice unit price
+     * @param milesTraveled miles traveled
+     * @return cost
+     */
     java.math.BigDecimal calculateCost(java.math.BigDecimal unitPrice, java.math.BigDecimal milesTraveled);
 }

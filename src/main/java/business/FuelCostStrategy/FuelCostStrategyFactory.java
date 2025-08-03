@@ -6,11 +6,16 @@ package business.FuelCostStrategy;
 import dao.VehicleDAO;
 import model.VehicleDTO;
 /**
- *
- * @author Administrator
+ * strategy factory
+ * @author Xiaoli He
  */
 public class FuelCostStrategyFactory {
     
+    /**
+     * get strategy by vehicle fuel type
+     * @param vehicleId vehicle id
+     * @return different cost strategy
+     */
     public static FuelCostStrategy getStrategyByVehicleId(int vehicleId) {
         VehicleDAO v_dao = new VehicleDAO();
         String fuel_type = v_dao.getById(vehicleId).getFuelType();
