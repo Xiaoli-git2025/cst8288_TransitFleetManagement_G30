@@ -60,7 +60,9 @@ public class OperatorControl extends HttpServlet {
                     break;
                 case "fuel_consumption":
                     //getFuelConsumption, list, add, delete, update 
-                    request.getRequestDispatcher("/views/operator/FuelView.jsp").forward(request, response);
+                    List<VehicleDTO> vehicle = logic.getVehiclesByUserId(user_id);
+                    request.setAttribute("vehicles", vehicle);
+                    request.getRequestDispatcher("/views/operator/FuelConsumptionView.jsp").forward(request, response);
                     break;
                 case "operator_alert":
                     //getCurrentOperatorSeletedVehicleAlert, list, add, delete, update
