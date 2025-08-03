@@ -1,7 +1,6 @@
 package controller;
 
 import business.VehicleComponentBusinessLogic;
-import static cn.jdevelops.log.LogUtils.error;
 import model.VehicleComponentDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,6 +15,7 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "VehicleComponentControl", urlPatterns = {"/VehicleComponentControl"})
 public class VehicleComponentControl extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
     public VehicleComponentBusinessLogic componentLogic;
 
@@ -25,7 +25,7 @@ public class VehicleComponentControl extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) 
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
@@ -33,19 +33,18 @@ public class VehicleComponentControl extends HttpServlet {
                 getAllComponents(request, response);
                 return;
             }
-
             switch (action) {
-                case "AddComponent":  
+                case "AddComponent":
                     addComponent(request, response);
                     break;
-                case "UpdateComponent": 
+                case "UpdateComponent":
                     updateComponent(request, response);
-                    break;              
-                case "GetAllComponents": 
+                    break;
+                case "GetAllComponents":
                     getAllComponents(request, response);
                     break;
                 default:
-                    getAllComponents(request, response);  
+                    getAllComponents(request, response);
             }
         } catch (SQLException e) {
             throw new ServletException(e);
@@ -53,25 +52,28 @@ public class VehicleComponentControl extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String actions = request.getParameter("actions");
-            
+
             switch (actions) {
+
+                case "EditComponent":
+                    showEditForm(request, response);
+                    break;
                 case "DeleteComponent":
-                        deleteComponent(request, response);
-                        break;
+                    deleteComponent(request, response);
+                    break;
                 default:
-                    getAllComponents(request,response);
+                    getAllComponents(request, response);
             }
         } catch (SQLException ex) {
             Logger.getLogger(VehicleComponentControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
-    public void getAllComponents(HttpServletRequest request, HttpServletResponse response) 
+    public void getAllComponents(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         List<VehicleComponentDTO> allComponents = componentLogic.getAllObjects();
         request.setAttribute("vehicleComponents", allComponents);
@@ -79,10 +81,10 @@ public class VehicleComponentControl extends HttpServlet {
         request.getRequestDispatcher("/views/admin/VehicleComponent.jsp").forward(request, response);
     }
 
-    private void addComponent(HttpServletRequest request, HttpServletResponse response) 
+    private void addComponent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         VehicleComponentDTO component = new VehicleComponentDTO();
-        component.setComponentId(Integer.parseInt(request.getParameter("component_id")));
+        //component.setComponentId(Integer.parseInt(request.getParameter("component_id")));
         component.setComponentName(request.getParameter("component_name"));
         component.setVehicleId(Integer.parseInt(request.getParameter("vehicle_id")));
         component.setUsedHour(Integer.parseInt(request.getParameter("used_hour")));
@@ -90,14 +92,31 @@ public class VehicleComponentControl extends HttpServlet {
 
         boolean success = componentLogic.addObject(component);
         if (success) {
-            getAllComponents(request,response);       
+            getAllComponents(request, response);
         } else {
             request.setAttribute("error", "Failed to add component");
             request.getRequestDispatcher("/views/admin/AddComponent.jsp").forward(request, response);
         }
     }
 
-    private void updateComponent(HttpServletRequest request, HttpServletResponse response) 
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        try {
+            int componentId = Integer.parseInt(request.getParameter("componentId"));
+            VehicleComponentDTO component = componentLogic.getObjById(componentId);
+
+            if (component == null) {
+                throw new ServletException("Component not found with ID: " + componentId);
+            }
+
+            request.setAttribute("vehicleComponents", component);
+            request.getRequestDispatcher("/views/admin/EditComponent.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            throw new ServletException("Invalid component ID format", e);
+        }
+    }
+
+    private void updateComponent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         VehicleComponentDTO component = new VehicleComponentDTO();
         component.setComponentId(Integer.parseInt(request.getParameter("component_id")));
@@ -108,21 +127,22 @@ public class VehicleComponentControl extends HttpServlet {
 
         boolean success = componentLogic.updateObject(component);
         if (success) {
-            getAllComponents(request,response);
+            getAllComponents(request, response);
         } else {
             request.setAttribute("error", "Failed to update component");
             request.getRequestDispatcher("/views/admin/EditComponent.jsp").forward(request, response);
         }
     }
 
-    private void deleteComponent(HttpServletRequest request, HttpServletResponse response) 
+    private void deleteComponent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int componentId = Integer.parseInt(request.getParameter("componentId"));
         boolean success = componentLogic.deleteObject(componentId);
         if (success) {
-            getAllComponents(request,response);
+            getAllComponents(request, response);
         } else {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
+ 
 }

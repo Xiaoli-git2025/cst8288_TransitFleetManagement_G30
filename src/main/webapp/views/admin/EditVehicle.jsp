@@ -49,66 +49,69 @@
                     </li>
                 </ul>
             </nav>
-        <div class="container">
-        <div class="box">
-        <form action ="${pageContext.request.contextPath}/VehicleControl" method="post">
-        <table>
-            <tr>
-                <td>Vehicle ID:</td>
-                <td><input type ="number" name ="vehicle_id" required></td>
-            </tr>
-                <tr>
-                    <td>Vehicle Number:</td>
-                    <td><input type="text" name="vehicle_number" required></td>
-                </tr>
-                <tr>
-                    <td>Consumption Rate:</td>
-                    <td><input type="number" name="consumption_rate" required></td>
-                </tr>
-                <tr>
-                    <td>Max Passenger:</td>
-                    <td><input type="number" name="max_passenger" required></td>
-                </tr>
-                <tr>
-                    <td>Fuel Type:</td>
-                    <td><input type="text" name="fuel_type" required></td> 
-                </tr>
-                </tr>
-                <tr>
-                    <td>Route ID:</td>
-                    <td><input type="number" name="route_id" required></td>
-                </tr>
-                </tr>
-                <tr>
-                    <td>Capacity:</td>
-                    <td><input type="number" name="capacity" required></td>
-                </tr>
-                <tr>
-                    <td>Component ID:</td>
-                    <td><input type="number" name="component_id" required></td>
-                </tr>
-            </table>
-            <button type="submit" name="action" value="UpdateVehicle" class="btn btn-sm btn-primary">Edit Vehicle</button>
-        </form>
-        </div>
-        </div>
+            <div class="container">
+                <div class="box">
+                    <form action ="${pageContext.request.contextPath}/VehicleControl" method="post">
+                        <input type="hidden" name="component_id" value="${component.componentId}">
+                        <table>
+
+                            <tr>
+                                <td>Vehicle ID:</td>
+                                <td><input type="text" name="vehicle_id" value="${vehicle.vehicleId}" required></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Vehicle Number:</td>
+                                <td><input type="text" name="vehicle_number" value="${vehicle.vehicleNumber}" required></td>
+                            </tr>
+                            <tr>
+                                <td>Consumption Rate:</td>
+                                <td><input type="number" name="consumption_rate" value="${vehicle.consumptionRate}" step="0.01" required></td>
+                            </tr>
+                            <tr>
+                                <td>Max Passenger:</td>
+                                <td><input type="number" name="max_passenger" value="${vehicle.maxPassenger}" required></td>
+                            </tr>
+                            <tr>
+                                <td>Fuel Type:</td>
+                                <td>
+                                    <select name="fuel_type" required>
+                                        <option value="Diesel" ${vehicle.fuelType == 'Diesel' ? 'selected' : ''}>Diesel</option>
+                                        <option value="Electronic" ${vehicle.fuelType == 'Electronic' ? 'selected' : ''}>Electronic</option>
+                                        <option value="Hybrid" ${vehicle.fuelType == 'Hybrid' ? 'selected' : ''}>Hybrid</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Route ID:</td>
+                                <td><input type="number" name="route_id" value="${vehicle.routeId}" required></td>
+                            </tr>
+                            <tr>
+                                <td>Capacity:</td>
+                                <td><input type="number" name="capacity" value="${vehicle.capacity}" required></td>
+                            </tr>
+                        </table>
+                        <button type="submit" name="action" value="UpdateVehicle" class="btn btn-sm btn-primary">Update Vehicle</button>
+                    </form>
+                </div>
+            </div>
     </body>
     <div class="footer">
-                <p>Contact us at: tfms@algonquinlive.com | Phone: (123) 456-7890 | 
-                    <a href="linkedin.html">LinkedIn</a>
-                </p>
-            </div>
+        <p>Contact us at: tfms@algonquinlive.com | Phone: (123) 456-7890 | 
+            <a href="linkedin.html">LinkedIn</a>
+        </p>
+    </div>
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const menuItems = document.querySelectorAll(".menu-item .menu-title");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuItems = document.querySelectorAll(".menu-item .menu-title");
 
-                    menuItems.forEach(function (menuTitle) {
-                        menuTitle.addEventListener("click", function () {
-                            const submenu = this.nextElementSibling;
-                            submenu.classList.toggle("show");
-                        });
-                    });
+            menuItems.forEach(function (menuTitle) {
+                menuTitle.addEventListener("click", function () {
+                    const submenu = this.nextElementSibling;
+                    submenu.classList.toggle("show");
                 });
-            </script>
+            });
+        });
+    </script>
 </html>

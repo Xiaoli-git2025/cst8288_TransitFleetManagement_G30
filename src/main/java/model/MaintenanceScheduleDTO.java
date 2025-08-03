@@ -83,6 +83,8 @@ public class MaintenanceScheduleDTO {
     public void setMaintenanceCost(java.math.BigDecimal maintenanceCost) {
         this.maintenanceCost = maintenanceCost;
     }
-    
+    public boolean getCompleted(){
+        return completed;
+    }
     
 }

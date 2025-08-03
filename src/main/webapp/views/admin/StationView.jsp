@@ -81,7 +81,7 @@
                                 <td><%= station.getStationName()%></td>
 
                                 <td>
-                                    <a href="<%= request.getContextPath()%>/views/admin/EditStation.jsp?id=<%= station.getStationId()%>"
+                                    <a href="<%= request.getContextPath()%>/StationControl?action=EditStation&stationId=<%= station.getStationId()%>"
                                        class="btn btn-sm btn-primary">Edit</a>
                                     <a href="<%= request.getContextPath()%>/StationControl?action=DeleteStation&stationId=<%= station.getStationId()%>"
                                        class="btn btn-sm btn-danger" 

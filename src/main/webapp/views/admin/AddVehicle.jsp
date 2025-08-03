@@ -53,11 +53,12 @@
                     <form action="${pageContext.request.contextPath}/VehicleControl" method="post">
 
                         <table>
+                            <!--
                             <tr>
                              <td>Vehicle ID:</td>
                                 <td><input type ="number" name ="vehicle_id" required></td>
                             </tr>
-
+                             -->
                             <tr>
                                 <td>Vehicle Number:</td>
                                 <td><input type="text" name="vehicle_number" required></td>
@@ -84,10 +85,7 @@
                                 <td>Capacity:</td>
                                 <td><input type="number" name="capacity" required></td>
                             </tr>
-                            <tr>
-                                <td>Component ID:</td>
-                                <td><input type="number" name="component_id" required></td>
-                            </tr>
+
                         </table>
                         <button type="submit" name="action" value="AddVehicle" class="btn btn-sm btn-primary">Add Vehicle</button>
                     </form>

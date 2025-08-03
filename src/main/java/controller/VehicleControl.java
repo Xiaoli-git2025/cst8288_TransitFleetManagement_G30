@@ -42,9 +42,6 @@ public class VehicleControl extends HttpServlet {
                 case "UpdateVehicle":
                     updateVehicle(request, response);
                     break;
-                case "EditVehicleForm":
-                    showEditForm(request, response);
-                    break;
                 case "AddVehicleForm":
                     showAddForm(request, response);
                     break;
@@ -72,7 +69,7 @@ public class VehicleControl extends HttpServlet {
             throws ServletException, IOException {
         try {
             VehicleDTO vehicle = new VehicleDTO();
-            vehicle.setVehicleId(getIntParameter(request,"vehicle_id"));
+            //vehicle.setVehicleId(getIntParameter(request,"vehicle_id"));
             vehicle.setVehicleNumber(getRequiredParameter(request, "vehicle_number"));
             BigDecimal consumptionRate = getConsumptionRateParameter(request);
             vehicle.setConsumptionRate(consumptionRate);
@@ -112,20 +109,18 @@ public class VehicleControl extends HttpServlet {
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            int vehicleId = getIntParameter(request, "vehicleId");
-            VehicleDTO existingVehicle = vehicleDAO.getById(vehicleId);
-            if (existingVehicle == null) {
-                throw new ServletException("Vehicle not found");
-            }
-            request.setAttribute("vehicle", existingVehicle);
-            request.getRequestDispatcher("/views/admin/EditVehicle.jsp").forward(request, response);
-        } catch (NumberFormatException e) {
-            throw new ServletException("Invalid vehicle ID");
-        }
+        throws ServletException, IOException {
+    try {
+        String vehicleIdParam = request.getParameter("vehicleId");
+        int vehicleId = Integer.parseInt(vehicleIdParam);
+        VehicleDTO existingVehicle = vehicleDAO.getById(vehicleId);
+        request.setAttribute("vehicle", existingVehicle);
+        request.getRequestDispatcher("/views/admin/EditVehicle.jsp").forward(request, response); 
+    } catch (NumberFormatException e) {
+        throw new ServletException("Invalid vehicle ID format. Must be a number. Received: " 
+            + request.getParameter("vehicleId"));
     }
-
+}
     private void showAddForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/views/admin/AddVehicle.jsp").forward(request, response);
@@ -141,14 +136,20 @@ public class VehicleControl extends HttpServlet {
                 return;
             }
 
-            if (action.equals("deleteVehicle")) {
-                int vehicleId = getIntParameter(request, "vehicleId");
-                if (!vehicleDAO.delete(vehicleId)) {
-                    throw new ServletException("Failed to delete vehicle");
-                }
-                response.sendRedirect("VehicleControl?action=ListVehicles");
-            } else {
-                listVehicles(request, response);
+            switch (action) {
+                case "deleteVehicle":
+                    int vehicleId = getIntParameter(request, "vehicleId");
+                    if (!vehicleDAO.delete(vehicleId)) {
+                        throw new ServletException("Failed to delete vehicle");
+                    }
+                    response.sendRedirect("VehicleControl?action=ListVehicles");
+                    break;
+                case "EditVehicleForm":
+                    showEditForm(request, response);
+                    break;
+                default:
+                    listVehicles(request, response);
+                    break;
             }
         } catch (NumberFormatException e) {
             throw new ServletException("Invalid number format: " + e.getMessage());
@@ -175,13 +176,13 @@ public class VehicleControl extends HttpServlet {
         }
     }
 
-    private BigDecimal getConsumptionRateParameter(HttpServletRequest request) 
-    throws ServletException {
-    String value = getRequiredParameter(request, "consumption_rate");
-    try {
-        return new BigDecimal(value);
-    } catch (NumberFormatException e) {
-        throw new ServletException("Invalid consumption rate format");
+    private BigDecimal getConsumptionRateParameter(HttpServletRequest request)
+            throws ServletException {
+        String value = getRequiredParameter(request, "consumption_rate");
+        try {
+            return new BigDecimal(value);
+        } catch (NumberFormatException e) {
+            throw new ServletException("Invalid consumption rate format");
+        }
     }
-}
 }

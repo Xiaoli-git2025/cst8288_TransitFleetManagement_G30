@@ -51,15 +51,15 @@
             </nav>
             <div class="container">
                 <div class="box">
-                    <form action ="${pageContext.request.contextPath}/StationControl" method="post">
+                    <form action ="${pageContext.request.contextPath}/StationControl" method="post"> 
                         <table>
                             <tr>
                                 <td>Station ID:</td>
-                                <td><input type ="number" name ="station_id" required></td>
+                                <td><input type ="number" name ="station_id"  value="${stations.stationId}" required></td>
                             </tr>
                             <tr>
                                 <td>Station Name:</td>
-                                <td><input type ="text" name ="station_name" required></td>
+                                <td><input type ="text" name ="station_name" value="${stations.stationName}" required></td>
                             </tr>
                         </table>
                         <button type="submit" name="action" value="UpdateStation" class="btn btn-sm btn-primary">Edit Station</button>

@@ -76,7 +76,10 @@ public class StationDAO implements DAOInterface<StationDTO>{
             con = DataSource.getConnection();
             pstmt = con.prepareStatement("INSERT INTO station (station_name) VALUES(?)");
             pstmt.setString(1, obj.getStationName());
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                ret = true;
+            }
        
         } catch (SQLException e) {
             e.printStackTrace();

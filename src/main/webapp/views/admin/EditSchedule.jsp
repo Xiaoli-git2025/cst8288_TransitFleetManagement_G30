@@ -51,34 +51,43 @@
             </nav>
             <div class="container">
                 <div class="box">
-                    <form action ="${pageContext.request.contextPath}/RouteScheduleControl" method="post">
+                    <form action="${pageContext.request.contextPath}/RouteScheduleControl" method="post">
+                        <input type="hidden" name="action" value="UpdateRouteSchedule">
                         <table>
                             <tr>
                                 <td>Schedule ID:</td>
-                                <td><input type ="number" name ="schedule_id" required></td>
+                                <td><input type="number" name="schedule_id" value="${schedule.scheduleId}" readonly></td>
                             </tr>
                             <tr>
                                 <td>Route ID:</td>
-                                <td><input type ="number" name ="route_id" required></td>
+                                <td><input type="number" name="route_id" value="${schedule.routeId}" required></td>
                             </tr>
                             <tr>
                                 <td>Station ID:</td>
-                                <td><input type ="number" name ="station_id" required></td>
+                                <td><input type="number" name="station_id" value="${schedule.stationId}" required></td>
                             </tr>
                             <tr>
                                 <td>Schedule Number:</td>
-                                <td><input type="text" name="schedule_number" required></td>
+                                <td><input type="number" name="schedule_number" value="${schedule.scheduleNumber}" required></td>
                             </tr>
                             <tr>
                                 <td>Arrive Time:</td>
-                                <td><input type="time" name="schedule_arrive_time" step="1" required></td>
+                                <td>
+                                    <input type="time" name="schedule_arrive_time" 
+                                           value="${schedule.scheduleArriveTime.toLocalTime().toString().substring(0,5)}" 
+                                           step="1" required>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Depart Time:</td>
-                                <td><input type="time" name="schedule_depart_time" step="1" required></td>
+                                <td>
+                                    <input type="time" name="schedule_depart_time" 
+                                           value="${schedule.scheduleDepartTime.toLocalTime().toString().substring(0,5)}" 
+                                           step="1" required>
+                                </td>
                             </tr>
                         </table>
-                        <button type="submit" name="action" value="UpdateRouteSchedule" class="btn btn-sm btn-primary">Edit Route Schedule</button>
+                        <button type="submit" value="UpdataSchedule" class="btn btn-sm btn-primary">Update Route Schedule</button>
                     </form>
                 </div>
             </div>

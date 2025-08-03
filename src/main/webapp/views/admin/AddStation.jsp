@@ -53,11 +53,12 @@
                     <form action="${pageContext.request.contextPath}/StationControl" method="post">
                           
                         <table>
+                            <!--
                             <tr>
                              <td>Station ID:</td>
                                 <td><input type ="number" name ="station_id" required></td>
                             </tr>
-
+                            -->
                             <tr>
                                 <td>Station Name:</td>
                                 <td><input type="text" name="station_name" required></td>

@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layout.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <title>Transit Fleet Management System - Vehicle</title>
-       
+
         <!--
         <style>
             .vehicle-component-table th,
@@ -95,11 +95,11 @@
                             <td><%= vehicle.getRouteId()%></td>
                             <td><%= vehicle.getCapacity()%></td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/views/admin/EditVehicle.jsp"
+                                <a href="${pageContext.request.contextPath}/VehicleControl?action=EditVehicleForm&vehicleId=<%= vehicle.getVehicleId()%>"
                                    class="btn btn-sm btn-primary">Edit</a>
                                 <a href="${pageContext.request.contextPath}/VehicleControl?action=deleteVehicle&vehicleId=<%= vehicle.getVehicleId()%>"
                                    class="btn btn-sm btn-danger" 
-                                   onclick="return confirm('Are you sure you want to delete this component?')">Delete</a>
+                                   onclick="return confirm('Are you sure you want to delete this vehicle?')">Delete</a>
                             </td>
                         </tr>
                         <%}%>
