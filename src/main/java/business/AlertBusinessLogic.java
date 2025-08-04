@@ -214,12 +214,7 @@ public class AlertBusinessLogic {
         return userDao.getById(maintAlertDao.getById(malert_id).getReporterId()).getName();
     }
     
-    /**
-     * get active alert
-     * @return active alerts
-     * @throws SQLException exceptions
-     */
-    public List<MaintenanceAlertDTO> getActiveMaintAlert() throws SQLException {
+    public void insertUsageAlert() throws SQLException{
         List<VehicleComponentDTO> components = componentDao.getAll();
         Iterator<VehicleComponentDTO> c_iterator = components.iterator();
         while (c_iterator.hasNext()) {
@@ -233,8 +228,18 @@ public class AlertBusinessLogic {
                 alert.setReporterId(1);
                 alert.setResolved(false);
                 maintAlertDao.add(alert);
+                component.setUsedHour(0);
+                componentDao.update(component);
             }
         }
+    }
+    /**
+     * get active alert
+     * @return active alerts
+     * @throws SQLException exceptions
+     */
+    public List<MaintenanceAlertDTO> getActiveMaintAlert() throws SQLException {
+        
         List<MaintenanceAlertDTO> all =  maintAlertDao.getAll();
         Iterator<MaintenanceAlertDTO> iterator = all.iterator();
         while (iterator.hasNext()) {
