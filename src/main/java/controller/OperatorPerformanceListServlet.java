@@ -16,17 +16,6 @@ import model.OperatorPerformanceDTO;
  * OperatorPerformanceListServlet is a servlet responsible for retrieving and displaying
  * a list of operator performance logs.
  *
- * <p>This servlet is mapped to the URL pattern <code>/operatorPerformanceList</code>.
- * It uses the OperatorPerformanceDAO to fetch operator performance data from the database
- * and forwards the result to the appropriate JSP view for rendering.</p>
- *
- * <p>Expected attributes set in the request:
- * <ul>
- *     <li><b>logs</b>: List of OperatorPerformanceDTO containing performance data</li>
- * </ul></p>
- *
- * <p>Expected JSP view path: <code>/views/manager/OperatorPerformanceList.jsp</code></p>
- *
  * @author 
  * @version 1.0
  * @since 2025-08-03

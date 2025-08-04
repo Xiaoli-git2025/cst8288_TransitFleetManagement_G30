@@ -68,7 +68,7 @@ public class ManagerControl extends HttpServlet {
                     request.getRequestDispatcher("/views/manager/AlertTypeView.jsp").forward(request, response);
                     break;
                 case "all_alerts":
-                    //getActiveAlerts, list, update resolved
+                    //getActiveAlerts, list, update, delete
                     List<MaintenanceAlertDTO> malerts = logic.getActiveMaintAlert();
                     request.setAttribute("maint_alerts", malerts);
                     request.getRequestDispatcher("/views/manager/ActiveAlertView.jsp").forward(request, response);
