@@ -24,9 +24,9 @@
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <a href="${pageContext.request.contextPath}/Login?logout=true" class="icon-btn logout" title="Logout">
-                    <a href="EditComponent.jsp"></a>
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
+                <a href="EditComponent.jsp"></a>
             </div>
         </div>
         <!-- Main content with sidebar -->
