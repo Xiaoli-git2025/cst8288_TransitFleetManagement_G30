@@ -5,7 +5,7 @@
 package business;
 import dao.*;
 import model.*;
-
+import java.time.LocalDate;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -220,6 +220,21 @@ public class AlertBusinessLogic {
      * @throws SQLException exceptions
      */
     public List<MaintenanceAlertDTO> getActiveMaintAlert() throws SQLException {
+        List<VehicleComponentDTO> components = componentDao.getAll();
+        Iterator<VehicleComponentDTO> c_iterator = components.iterator();
+        while (c_iterator.hasNext()) {
+            VehicleComponentDTO component = c_iterator.next();
+            if (component.getUsedHour()>component.getThresholdHour()) {
+                MaintenanceAlertDTO alert = new MaintenanceAlertDTO();
+                alert.setAlertId(1);
+                alert.setComponentId(component.getComponentId());
+                java.sql.Date log_date = java.sql.Date.valueOf(LocalDate.now());
+                alert.setAlertDate(log_date);
+                alert.setReporterId(1);
+                alert.setResolved(false);
+                maintAlertDao.add(alert);
+            }
+        }
         List<MaintenanceAlertDTO> all =  maintAlertDao.getAll();
         Iterator<MaintenanceAlertDTO> iterator = all.iterator();
         while (iterator.hasNext()) {

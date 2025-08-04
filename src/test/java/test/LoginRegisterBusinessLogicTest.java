@@ -39,8 +39,8 @@ public class LoginRegisterBusinessLogicTest {
         System.out.println("checkAccount - success case");
         
         // These should match an existing user in your database
-        String email = "test@example.com";
-        String password = "password123";
+        String email = "ohe@gmail.com";
+        String password = "he";
 
         String result = logic.checkAccount(email, password);
         assertNotNull(result);
