@@ -80,6 +80,7 @@ public class OperatorControl extends HttpServlet {
                     } catch (SQLException ex) {
                         Logger.getLogger(VehicleAlertControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    break;
                 case "maintenance_schedule":
                     List<MaintenanceScheduleDTO> allSchedules = msblogic.getAllObjects();                    
                     if (allSchedules == null) {
