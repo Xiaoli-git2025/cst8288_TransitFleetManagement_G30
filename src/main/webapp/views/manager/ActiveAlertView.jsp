@@ -71,7 +71,7 @@
                         <table border="1">
                             <thead>
                                 <tr>
-                                    <th>Maintenance Alert Id</th>
+                                    <th>Id</th>
                                     <th>Alert Type</th>
                                     <th>Component</th>
                                     <th>Alert Date</th>
