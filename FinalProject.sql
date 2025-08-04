@@ -165,3 +165,12 @@ INSERT INTO MaintenanceSchedule(maintenance_id, schedule_date, note, maintenance
 (1, '2025-07-03', 'need tool', 727.62, 0),
 (2, '2025-07-29', 'need oil change', 91.34, 0),
 (3, '2025-08-01', 'wait for parts', 264.60, 0);
+
+CREATE OR REPLACE VIEW vehicle_alerts_view AS
+SELECT u.user_id,v.vehicle_id,a.alert_type,a.alert_description
+FROM Users u JOIN Route r ON u.route_id = r.route_id
+JOIN Vehicle v ON r.route_id = v.route_id
+JOIN VehicleComponent vc ON v.vehicle_id = vc.vehicle_id
+JOIN MaintenanceAlert ma ON vc.component_id = ma.component_id
+JOIN Alert a ON ma.alert_id = a.alert_id
+ORDER BY v.vehicle_id;
